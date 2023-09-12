@@ -1,0 +1,9 @@
+body{
+background:linear-gradient(to right,red,orange );
+}
+
+.biggestbox{
+    width: 500px;
+    height: 500px;
+    border-color: black ;
+}
