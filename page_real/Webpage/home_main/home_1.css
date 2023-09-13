@@ -1,7 +1,7 @@
 body{
     margin: 0;
     padding: 0; 
-    
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .container{
@@ -55,45 +55,145 @@ body{
     opacity: 1;
 }
 
+
 .lorem{
+    color: #fff;
     width: 100%;
-    height: 300px;
-    background-color: rgb(255, 255, 255);
+    height: 500px;
+    background-color: rgb(199, 82, 82);
     display:flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    text-align: center;    
+    background-image: url(./img_home/295-2953214_women-beautiful-sunny-hat-cloud-legs-blue-tropical.jpg);
+    
 }
+
+.lorem button{
+    cursor: pointer;
+    color: #fff;
+    font-weight: bolder;
+    width: 200px;
+    height: 50px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(255, 97, 35);
+    box-shadow: 0 0 5px rgb(255, 244, 244);
+}
+
+.lorem button:hover{
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 20px rgb(255, 244, 244);
+    color: rgb(255, 97, 35);
+    transition: 0.5s;
+}
+
+.lorem h1{
+    font-size: 40px;
+}
+.lorem p{
+    font-size: 20px;
+    font-weight: 300px;
+}
+
+
 
 .roomtypesBar{
     width: 100%;
-    background-color: rgb(173, 255, 228);
-    height: 400px;
+    height: 600px;
+    text-align: center;
+    background:linear-gradient(100deg,rgb(94, 204, 255),rgb(23, 38, 255) );
 }
 
 .textroombox{
     width: 100%;
-    background-color: rgb(255, 152, 152);
-    height: 100px;
+    height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.roomhead{
+.roomtypebox{
+    width: 350px;
+    height: 70px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    border:3px solid #fff;
+    
+}
+.roomtypebox p{
     color: #fff;
     font-size: 30px;
     font-weight: bold;
 }
 
-.roomtypebox{
-    background-color: #000000;
-    width: 200px;
-    height: 100%;
-    display:flex;
+.roomshow{
+    width: 100%;
+    height: 60%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.firstroom div{
+   border: 10px;
+   height: 250px;
+   width: 450px;
+}
+
+.firstroom{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+  
+   width: 100%;
+   height: 100%;
+}
+
+.Secondroom div{
+    border: 10px;
+    height: 250px;
+    width: 450px;
+ }
+ 
+ .Secondroom{
+    display: flex;
     justify-content: center;
     align-items: center;
-    border:5px solid #fff;
-    margin-top: 20px;
-    margin-bottom: 40px;
-}
+    flex-direction: column;
+  
+    width: 100%;
+    height: 100%;
+ }
+
+ .Thirdroom div{
+    border: 10px;
+    height: 250px;
+    width: 450px;
+ }
+ 
+ .Thirdroom{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+ 
+    width: 100%;
+    height: 100%;
+ }
+
+ .roomshow h1{
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+ }
+
+ .roomshow img{
+    width: 100%;
+    max-height: 100%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px #fff;
+ }
