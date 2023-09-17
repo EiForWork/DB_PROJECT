@@ -165,9 +165,10 @@ width: 350px;
     margin-top: 60px;
     font-size: 20px;
     color: rgb(255, 255, 255);
-    background-color: rgb(193, 128, 255);
+    background-color: rgb(67, 70, 255);
     border: none;
     border-radius: 10px;
-    box-shadow: 0px 0px 5px rgb(255, 255, 255);
+    box-shadow: 0px 0px 5px rgb(22, 93, 245);
     cursor: pointer;
+    font-weight: bold;
 }
