@@ -120,13 +120,15 @@ width: 350px;
     font-weight: bold;
     justify-content: center;
     align-items: center;
+    
 }
 
 .emailform{
     height: 60px;
-    ;
+    
 }
 .emailform input{
+    
     width: 100%;
     border: none;
     background: none;
@@ -171,4 +173,9 @@ width: 350px;
     box-shadow: 0px 0px 5px rgb(22, 93, 245);
     cursor: pointer;
     font-weight: bold;
+}
+
+.regisbutton:hover{
+    background-color: rgb(160, 100, 255);
+
 }
