@@ -1,5 +1,4 @@
 const express = require('express')
-const { register } = require('module')
 const router = express.Router()
 const app = express()
 const path = require('path')
@@ -13,7 +12,7 @@ app.use('/page_all/home_main',express.static('home_main'))
 
 
 const home_page = path.join(__dirname,"page_all/home_main/home.html")
-const login_page = path.join(__dirname,"page_all/Login_page/loginhtml")
+const login_page = path.join(__dirname,"page_all/Login_page/login.html")
 const register_page = path.join(__dirname,"page_all/Register/register.html")
 
 router.get("/",(req,res)=>{
