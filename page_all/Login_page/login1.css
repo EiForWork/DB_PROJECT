@@ -53,6 +53,7 @@
     width: 370px;
     height: 60px;
     border-radius: 10px;
+    cursor: pointer;
     background:linear-gradient(to right,rgb(255, 224, 47),rgb(255, 96, 96)); /* สีพื้นหลังปกติ */
     color: #fff; /* สีข้อความปกติ */
     /* เอาคำสั่ง box-shadow ออก */
