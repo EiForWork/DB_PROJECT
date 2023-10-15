@@ -8,7 +8,7 @@ const flash = require('connect-flash');
 const storeCon = require('./controller/storeUser')
 
 
-mongoose.connect('mongodb+srv://bob12345:12345@cluster0.rky6hbd.mongodb.net/?retryWrites=true&w=majority',{
+mongoose.connect('mongodb+srv://bob:12345@cluster0.92uyxhl.mongodb.net/',{
     useNewUrlParser : true,
 })
 
@@ -18,9 +18,12 @@ app.use(session({
 app.use(express.json())
 app.set('view engine','ejs')
 app.use(express.static('page_all/home_main'))
-app.use(express.static('page_all/Login_page'))
+app.use(express.static('page_all/Login_page'))  
 app.use(express.static('page_all/Register'))
 app.use(flash())
+
+
+
 const home_page = path.join(__dirname, '/page_all/home_main/home.ejs')
 const login_page = path.join(__dirname, '/page_all/Login_page/login.ejs')
 const register_page = path.join(__dirname, '/page_all/Register/register.ejs')
@@ -34,7 +37,9 @@ router.get("/", (req, res) => {
 })
 
 router.get("/login", (req, res) => {
-    res.sendFile(login_page)
+    res.render(login_page,{
+        errors:req.flash('validationErrors')
+    })
 })
 
 router.get("/register", (req, res) => {
