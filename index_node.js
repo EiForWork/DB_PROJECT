@@ -10,6 +10,10 @@ const storeCon = require('./controller/storeUser')
 
 mongoose.connect('mongodb+srv://bob:12345@cluster0.92uyxhl.mongodb.net/',{
     useNewUrlParser : true,
+}).then(()=>{
+    console.log("connected to db")
+}).catch(()=>{
+    console.log("error in connection")
 })
 
 app.use(session({
@@ -18,8 +22,10 @@ app.use(session({
 app.use(express.json())
 app.set('view engine','ejs')
 app.use(express.static('page_all/home_main'))
-app.use(express.static('page_all/Login_page'))  
-app.use(express.static('page_all/Register'))
+app.use(express.static('./page_all/Login_page/'))  
+app.use(express.static('./page_all/Register/'))
+app.use(express.static('./page_all/roomtypes/'))
+app.use(express.static('./page_all/'))
 app.use(flash())
 
 
@@ -27,6 +33,7 @@ app.use(flash())
 const home_page = path.join(__dirname, '/page_all/home_main/home.ejs')
 const login_page = path.join(__dirname, '/page_all/Login_page/login.ejs')
 const register_page = path.join(__dirname, '/page_all/Register/register.ejs')
+const roomtype_page = path.join(__dirname, '/page_all/roomtypes/roomtype.ejs')
 
 app.post('/login',storeCon)
 
@@ -43,7 +50,14 @@ router.get("/login", (req, res) => {
 })
 
 router.get("/register", (req, res) => {
-    res.sendFile(register_page)
+    res.status(200)
+    res.type('text/html')
+    res.render(register_page)
+})
+
+router.get("/roomtypes", (req, res) => {
+    res.type('text/html')
+    res.render(roomtype_page)
 })
 
 

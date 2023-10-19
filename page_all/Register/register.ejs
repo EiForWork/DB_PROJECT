@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="./regis.css">
+    <script src="/controller/regis.js"></script>
 </head>
 <body>
 
@@ -22,33 +23,33 @@
 
         <div class="box1">
 
-            <div class="name" id="name">
+            <div class="name">
                 <p>Name</p>
-                <input>
+                <input id="name">
             </div>
-            <div class="surname" id="surname">
+            <div class="surname">
                 <p>Surname</p>
-                <input>
+                <input id="surname">
             </div>
 
         </div>
 
         <div class="phoneANDgender">
 
-            <div class="phone" id="phone">
+            <div class="phone">
                 <p>Phone</p>
-                <input>
+                <input id="phone">
             </div>
 
-            <div class="gender" id="gender">
+            <div class="gender">
                 <p>Sex</p>
 
-                <div class="radioboxsex">
-                    <input type="radio" name="gender"  id="male">
+                <div class="radioboxsex" id="gender">
+                    <input type="radio" name="gender"  value="male">
                     Male
-                    <input type="radio" name="gender"  id="female">
+                    <input type="radio" name="gender"  value="female">
                     Female
-                    <input type="radio" name="gender" " id="other">
+                    <input type="radio" name="gender" " value="other">
                     LGTQ+
                 </div>
             </div>
@@ -61,17 +62,18 @@
                 <input type="text" id="email">
             </div>
 
-            <div class="country">
+            <div class="country" id="country">
                 <p>Select your country</p>
-                <select>  
-                    <option>---------Select your Country----------</option>  
-                    <option value="yellow" style="color: violet;">Thailand</option>  
-                    <option value="white" style="color: blue;">India</option>  
-                    <option value="black" style="color: black;">USA</option>  
-                    <option value="green" style="color: green;">Australia</option>  
-                    <option value="red" style="color: red;">Switzland</option>  
+                <select id="country-select">
+                    <option>---------Select your Country----------</option>
+                    <option value="Thailand">Thailand</option>
+                    <option value="India">India</option>
+                    <option value="USA">USA</option>
+                    <option value="Australia">Australia</option>
+                    <option value="Switzerland">Switzerland</option>
                 </select>
             </div>
+            
 
             <div class="date">
                 <p>Select Your Birthday</p>
@@ -92,7 +94,7 @@
         </div>
 
 
-        <button id="regisbutton" class="regisbutton">Regis</button>
+        <button id="regisbutton" class="regisbutton" type="submit" onclick="submiter()">Regis</button>
 
 
 

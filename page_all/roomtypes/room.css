@@ -75,14 +75,15 @@ body{
 
 .partyroompic{
     width: 100%;
-    height: 500px;
+    height: 600px;
     background-color: bisque;
     display: flex;
     justify-content: end;
     align-items:end;
-    background-image: url('./imgroom/swim.png');
-    background-size: cover;
+    background-image: url('./imgroom/poolvil.jpg');
+    background-size:cover;
     background-position: center;
+
 }
 
 .partopic {
@@ -96,7 +97,6 @@ body{
    font-size: 40px;
    color: #ffffff;
    font-weight: bold;
-  
 }  
 
 .Topicpar {
@@ -134,3 +134,43 @@ body{
     justify-content: center;
     font-size: 25px;
 }
+
+
+
+
+.partyroompic2{
+    width: 100%;
+    height: 600px;
+    background-color: bisque;
+    display: flex;
+    justify-content:start;
+    align-items:end; 
+    background-image: url('./imgroom/deluxe.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.partopic2 {
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    width: 300px;
+    height: 80px;
+    background-color: #000000;
+    margin-bottom: 30px;
+    font-size: 40px;
+    color: #ffffff;
+    font-weight: bold;
+ }  
+
+ .partyroompic3{
+    width: 100%;
+    height: 600px;
+    background-color: bisque;
+    display: flex;
+    justify-content:end;
+    align-items:end; 
+    background-image: url('./imgroom/luxury.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
