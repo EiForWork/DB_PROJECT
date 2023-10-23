@@ -3,12 +3,14 @@ const path = require('path')
 const router = express.Router()
 const app = express()
 const mongoose = require('mongoose')
-const session = require('express-session');
-const flash = require('connect-flash');
-const storeCon = require('./controller/storeUser')
+// const session = require('express-session');
+// const flash = require('connect-flash');
+// const storeCon = require('./controller/storeUser')
+const storeUser = require('./public/controller/regis')
 
 
-mongoose.connect('mongodb+srv://bob:12345@cluster0.92uyxhl.mongodb.net/',{
+
+mongoose.connect('mongodb+srv://bob:12345@cluster0.92uyxhl.mongodb.net/BissHotella',{
     useNewUrlParser : true,
 }).then(()=>{
     console.log("connected to db")
@@ -16,31 +18,34 @@ mongoose.connect('mongodb+srv://bob:12345@cluster0.92uyxhl.mongodb.net/',{
     console.log("error in connection")
 })
 
-app.use(session({
-    secret:"node secret"
-}))
+app.use(express.static(path.join(__dirname,'public')))
+app.use(express.static(path.join(__dirname,'public/home_main')))
+
+
+
+// app.use(session({
+//     secret:"node secret"
+// }))
 app.use(express.json())
 app.set('view engine','ejs')
-app.use(express.static('page_all/home_main'))
-app.use(express.static('./page_all/Login_page/'))  
-app.use(express.static('./page_all/Register/'))
-app.use(express.static('./page_all/roomtypes/'))
-app.use(express.static('./page_all/'))
-app.use(flash())
+// app.use(express.static(path.join(__dirname,'public/controller'))) 
+// app.use(express.static(path.join(__dirname,'public/Register/regis.css')))
+
+// app.use(flash())
 
 
 
-const home_page = path.join(__dirname, '/page_all/home_main/home.ejs')
-const login_page = path.join(__dirname, '/page_all/Login_page/login.ejs')
-const register_page = path.join(__dirname, '/page_all/Register/register.ejs')
-const roomtype_page = path.join(__dirname, '/page_all/roomtypes/roomtype.ejs')
+const home_page = path.join(__dirname, 'public/home_main/home.ejs')
+const login_page = path.join(__dirname, 'public/Login_page/login.ejs')
+const register_page = path.join(__dirname, 'public/Register/register.ejs')
+const roomtype_page = path.join(__dirname, 'public/roomtypes/roomtype.ejs')
 
-app.post('/login',storeCon)
+// app.post('/login',storeCon)
+// app.post('/register',storeUser)
 
 router.get("/", (req, res) => {
     res.status(200)
-    res.type('text/html')
-    res.sendFile(home_page)
+    res.render(home_page)
 })
 
 router.get("/login", (req, res) => {
@@ -49,9 +54,7 @@ router.get("/login", (req, res) => {
     })
 })
 
-router.get("/register", (req, res) => {
-    res.status(200)
-    res.type('text/html')
+router.get('/register', (req, res) => {
     res.render(register_page)
 })
 
