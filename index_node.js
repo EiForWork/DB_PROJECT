@@ -3,8 +3,8 @@ const path = require('path')
 const router = express.Router()
 const app = express()
 const mongoose = require('mongoose')
-// const session = require('express-session');
-// const flash = require('connect-flash');
+const session = require('express-session');
+const flash = require('connect-flash');
 // const storeCon = require('./controller/storeUser')
 const storeUser = require('./public/controller/regis')
 
@@ -20,18 +20,19 @@ mongoose.connect('mongodb+srv://bob:12345@cluster0.92uyxhl.mongodb.net/BissHotel
 
 app.use(express.static(path.join(__dirname,'public')))
 app.use(express.static(path.join(__dirname,'public/home_main')))
+app.use(express.static(path.join(__dirname,'public/Login_page')))
 
 
 
-// app.use(session({
-//     secret:"node secret"
-// }))
+app.use(session({
+    secret:"node secret"
+}))
 app.use(express.json())
 app.set('view engine','ejs')
 // app.use(express.static(path.join(__dirname,'public/controller'))) 
 // app.use(express.static(path.join(__dirname,'public/Register/regis.css')))
 
-// app.use(flash())
+app.use(flash())
 
 
 
