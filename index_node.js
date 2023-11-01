@@ -21,6 +21,8 @@ mongoose.connect('mongodb+srv://bob:12345@cluster0.92uyxhl.mongodb.net/BissHotel
 app.use(express.static(path.join(__dirname,'public')))
 app.use(express.static(path.join(__dirname,'public/home_main')))
 app.use(express.static(path.join(__dirname,'public/Login_page')))
+app.use(express.static(path.join(__dirname,'public/navbar_zone')))
+app.use(express.static(path.join(__dirname,'public/roomtypes')))
 
 
 
@@ -29,8 +31,7 @@ app.use(session({
 }))
 app.use(express.json())
 app.set('view engine','ejs')
-// app.use(express.static(path.join(__dirname,'public/controller'))) 
-// app.use(express.static(path.join(__dirname,'public/Register/regis.css')))
+
 
 app.use(flash())
 
@@ -40,6 +41,7 @@ const home_page = path.join(__dirname, 'public/home_main/home.ejs')
 const login_page = path.join(__dirname, 'public/Login_page/login.ejs')
 const register_page = path.join(__dirname, 'public/Register/register.ejs')
 const roomtype_page = path.join(__dirname, 'public/roomtypes/roomtype.ejs')
+const booking_page = path.join(__dirname, 'public/booking/booking.ejs')
 
 // app.post('/login',storeCon)
 // app.post('/register',storeUser)
@@ -60,8 +62,13 @@ router.get('/register', (req, res) => {
 })
 
 router.get("/roomtypes", (req, res) => {
-    res.type('text/html')
+    res.status(200)
+    res.type("text/css")
     res.render(roomtype_page)
+})
+
+router.get("/booking", (req, res) => {
+    res.render(booking_page)
 })
 
 

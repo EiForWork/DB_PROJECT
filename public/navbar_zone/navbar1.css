@@ -4,13 +4,12 @@ padding: 0;
 }
 
 .mainBoxNav{
-    background-color: yellowgreen;
-    width: 100%;
+   max-width: 100%;
     height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 4px 3px 10px rgb(119, 119, 119);
+    box-shadow: 0px 0px 50px rgb(73, 73, 73);
 }
 
 .ulnav{
@@ -86,16 +85,17 @@ img{
     transition: 0.5s;
 }
 
-li{
-color: white;    
-cursor: pointer;
-position: relative;
-font-size: 22px;
-font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-text-shadow: 0px 0px 2px #fff;
-}
+a{
+    text-decoration: none;
+    color: white;    
+    cursor: pointer;
+    position: relative;
+    font-size: 22px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-shadow: 0px 0px 2px #fff;
+    }
 
-li::before{
+a::before{
     content: "";
     position: absolute;
     bottom: -8px;
@@ -103,9 +103,9 @@ li::before{
     width: 0;
     background: #ffffff;
     border-radius: 50px;
-    transition: width 0.3s ease;
+    transition: width 0.4s ease;
 }
 
-li:hover::before{
+a:hover::before{
     width: 100%;
 }
