@@ -63,7 +63,7 @@ router.get('/register', (req, res) => {
 
 router.get("/roomtypes", (req, res) => {
     res.status(200)
-    res.type("text/css")
+    res.type('text/css')
     res.render(roomtype_page)
 })
 
