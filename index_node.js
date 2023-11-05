@@ -25,6 +25,14 @@ app.use(express.static(path.join(__dirname,'public/navbar_zone')))
 app.use(express.static(path.join(__dirname,'public/roomtypes')))
 
 
+const registrationSchema = new mongoose.Schema({
+    nameIn: String,
+    surnameIn: String,
+    phoneIn: String
+});
+
+
+
 
 app.use(session({
     secret:"node secret"
@@ -43,8 +51,7 @@ const register_page = path.join(__dirname, 'public/Register/register.ejs')
 const roomtype_page = path.join(__dirname, 'public/roomtypes/roomtype.ejs')
 const booking_page = path.join(__dirname, 'public/booking/booking.ejs')
 
-// app.post('/login',storeCon)
-// app.post('/register',storeUser)
+
 
 router.get("/", (req, res) => {
     res.status(200)
@@ -70,6 +77,28 @@ router.get("/roomtypes", (req, res) => {
 router.get("/booking", (req, res) => {
     res.render(booking_page)
 })
+
+
+const regisSchema = new mongoose.Schema({
+    name:{type:String,required:true}
+})
+const collection = new mongoose.model('Customers',regisSchema)
+
+router.post("/submit",(req,res)=>{
+const data = req.body;
+const newCustomer = new collection(data);
+newCustomer.save()
+  .then(() => {
+    // Handle successful data insertion
+  })
+  .catch(error => {
+    // Handle insertion failure
+  });
+
+});
+
+
+
 
 
 
