@@ -85,16 +85,6 @@ const regisSchema = new mongoose.Schema({
 const collection = new mongoose.model('Customers',regisSchema)
 
 router.post("/submit",(req,res)=>{
-const data = req.body;
-const newCustomer = new collection(data);
-newCustomer.save()
-  .then(() => {
-    // Handle successful data insertion
-  })
-  .catch(error => {
-    // Handle insertion failure
-  });
-
 });
 
 
