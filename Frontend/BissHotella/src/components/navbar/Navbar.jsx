@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 function Navbar() {
   return (
     <>
-    <nav className="mainBoxNav">
+    <nav  className="mainBoxNav">
         <div className="logonav">
         <img className="logo" src={logo}/>
         </div>

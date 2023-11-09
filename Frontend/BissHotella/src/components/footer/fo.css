@@ -6,13 +6,23 @@ body{
 
 .navigate a{
     font-size: 20px;   
+    width: 80px;
     padding: 10px;
-    margin-left: 20px;
+    margin-left: 10px;
+    height: 10px;
     text-decoration: none;
     color: rgb(255, 255, 255);
-    border: 2px solid rgb(247, 247, 247); /* Set the border width and color */
-    border-radius: 10px;
-    box-shadow: 1px 0px 5px rgb(206, 206, 206);
+    text-shadow: 0px 0px 3px rgb(231, 231, 231);
+}
+
+a:hover{
+text-shadow: 0px 0px 10px rgb(255, 255, 255);
+transition: 0.5s;
+}
+
+
+h1{
+    color: rgb(255, 255, 255);
 }
 
 .bigblock{
@@ -21,8 +31,9 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 200px;
-    background-color: rgb(102, 102, 102);
+    height: 210px;
+    background-color: rgb(41, 41, 41);
+    box-shadow: 0px 0px 20px rgb(0, 0, 0);
 }
 
 .navigate{
@@ -30,12 +41,17 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+}
+
+.logo{
+    margin: 20px;
 }
 
 .logo img{
 width: 40px;
 height: 30px;
-padding: 10px;
+padding: 16px;
 border-radius: 20px;
 }
 
@@ -47,4 +63,5 @@ border-radius: 20px;
     text-align: center;
     align-items: center;
     justify-content: center;
+    box-shadow: 0px 50px 100px rgb(255, 255, 255);
 }
