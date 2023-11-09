@@ -1,6 +1,11 @@
 import React from 'react';
-import Navbar from './components/navbar/navbar'
-import Footer from './components/footer/footer'
+import Navbar from '../navbar/navbar';
+import Footer from '../footer/footer';
+import {createBrowserRouter,RouterProvider,Route,Link} from 'react-router-dom'
+import '../login/login1.css'
+import s1 from './img/appleicon.png'
+import s2 from './img/fficon.png'
+import s3 from './img/ggicon.png'
 
 function Login() {
   return (
@@ -9,15 +14,15 @@ function Login() {
     <div className="bgmain">
       <div className="mainbox">
         <form className="form" action="/login" method="POST">
-          <h1>Login</h1>
+          <h2>Login</h2>
           
           <input className="Email" type="email" placeholder="Email" name="email" /><br />
           <input className="Password" type="password" placeholder="Password" name="password" /><br />
           
           <div className="forgotpassword">
-            <a href="#">Create Account</a>
-            <a href="#">Forgot password?</a>
-          </div><br />
+            <Link to="/register">Create Account</Link>
+            <Link to="/">Forgot password?</Link>
+          </div><br/>
           
           <button type="submit" className="buttonLog">Login</button><br />
           
@@ -28,9 +33,9 @@ function Login() {
           </div>
           
           <div className="contact">
-            <img className="iconcon" src="./img/ggicon.png" alt="" />
-            <img className="iconcon" src="./img/fficon.png" alt="" />
-            <img className="iconcon" src="./img/appleicon.png" alt="" />
+            <img className="iconcon" src={s1} alt="" />
+            <img className="iconcon" src={s2} alt="" />
+            <img className="iconcon" src={s3} alt="" />
           </div>
         </form>
       </div>

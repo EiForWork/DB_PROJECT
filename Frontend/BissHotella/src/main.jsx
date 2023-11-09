@@ -1,8 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
 import {createBrowserRouter,RouterProvider,Route,Link} from 'react-router-dom'
+import App from './App.jsx'
 import Login from './components/login/Login.jsx'
+import Booking from './components/booking/Booking.jsx'
+import Register from './components/register/Register.jsx'
 
 const router = createBrowserRouter([
   {
@@ -19,16 +21,16 @@ const router = createBrowserRouter([
   },
   {
     path:"/register",
-    element:<App/>
+    element:<Register/>
   },
   {
     path:"/gallery",
     element:<App/>
+  },
+  {
+    path:"/booking",
+    element:<Booking/>
   }
-  // {
-  //   path:"/",
-  //   element:<Home/>
-  // }
 ])
 
 

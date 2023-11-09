@@ -1,0 +1,174 @@
+body{
+    margin: 0%;
+    padding: 0;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .container{
+        background-image: url('./img/wallpaper.jpg');
+        width: 100%;
+        height: 1000px;
+        background-size: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .biggestbox{
+        width: 1600px;
+        height: 800px;
+        background: transparent;
+        backdrop-filter: blur(10px);
+    }
+    
+    .registext{
+        width: 100%;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        
+    }
+    
+    .registext p{
+        color: #fff;
+        font-size: 50px;
+        font-weight: bold;
+    }
+    
+    .formbiggestbox{
+       width: 100%;
+       height: 700px;
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
+    }
+    .formbiggestbox div{
+        margin-top:20px ;
+    }
+    
+    .box1{
+        display: flex;
+        width:100%;
+        color: #fff;
+        font-weight: bold;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .box1 div{
+    margin-left: 50px;
+    width: 350px;
+    
+    }
+    .box1 input{
+        color: #fff;
+        height: 25px;
+        width: 250px;
+        border: 0;
+        background: none;
+        border-bottom:2px solid #fff;
+    }
+    
+    .phoneANDgender{
+        display: flex;
+        width:100%;
+        color: #fff;
+        font-weight: bold;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .gender{
+        display: flex;
+        flex-direction: column;
+        width: 350px;
+    }
+    
+    .phoneANDgender div{
+        margin-left: 50px;
+        width: 350px;
+     
+    }
+    
+    .phone{
+        width: 350px;
+    }
+    .phone input{
+        height: 25px;
+        border: none;
+        background: none;
+        border-bottom:2px solid #fff;
+        width: 250px;
+    }
+    
+    .radioboxsex{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .radioboxsex input{
+        margin-left: 20px;
+    }
+    
+    .box3un{
+        display: flex;
+        width:100%;
+        color: #fff;
+        font-weight: bold;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .emailform{
+        height: 60px;
+        ;
+    }
+    .emailform input{
+        width: 100%;
+        border: none;
+        background: none;
+        border-bottom:2px solid #fff;
+        width: 250px;
+        color: #fff;
+        height: 25px;
+    }
+    
+    .passwordform{
+        display: flex;
+        width:100%;
+        color: #fff;
+        font-weight: bold;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .passwordform div{
+    margin-left: 50px;
+    width: 350px;
+    
+    }
+    .passwordform input{
+        color: #fff;
+        height: 25px;
+        width: 250px;
+        border: 0;
+        background: none;
+        border-bottom:2px solid #fff;
+    }
+    
+    .regisbutton{
+        height: 50px;
+        width: 200px;
+        margin-top: 60px;
+        font-size: 20px;
+        color: rgb(255, 255, 255);
+        background-color: rgb(67, 70, 255);
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0px 0px 5px rgb(22, 93, 245);
+        cursor: pointer;
+        font-weight: bold;
+    }

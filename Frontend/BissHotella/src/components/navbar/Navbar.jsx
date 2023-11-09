@@ -1,7 +1,7 @@
 import React from 'react'
 import '../navbar/na.css'
 import logo from '../navbar/logohotel.png'
-import { Link } from 'react-router-dom'
+import {createBrowserRouter,RouterProvider,Route,Link} from 'react-router-dom'
 
 
 function Navbar() {
@@ -23,7 +23,7 @@ function Navbar() {
         </div>
        
         <div className="buttonnav">
-               <button className="btnav">Book now</button>
+               <button className="btnav"><Link to="/booking">Book now</Link></button>
         </div>
     </nav>   
     </>
