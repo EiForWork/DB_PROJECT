@@ -24,7 +24,9 @@ function Footer() {
           <img src={gm}/>
           <img src={line}/>
         </div>
-        <p>Copyright &copy;2023 </p>
+    </div>
+    <div className="footerbot">
+        <p>Copyright &copy;2023 BissHotella.com</p>
     </div>
     </>
   )
