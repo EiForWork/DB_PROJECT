@@ -5,7 +5,7 @@ import App from './App.jsx'
 import Login from './components/login/Login.jsx'
 import Booking from './components/booking/Booking.jsx'
 import Register from './components/register/Register.jsx'
-
+import Room from './components/roomtypes/Room.jsx'
 const router = createBrowserRouter([
   {
     path: "/",
@@ -13,7 +13,7 @@ const router = createBrowserRouter([
   },
   {
     path:"/roomtypes",
-    element:<App/>
+    element:<Room/>
   },
   {
     path:"/login",
