@@ -5,31 +5,22 @@ const app = express()
 const mongoose = require('mongoose')
 const session = require('express-session');
 const flash = require('connect-flash');
-// const storeCon = require('./controller/storeUser')
-const storeUser = require('./public/controller/regis')
+const cors = require('cors')
+app.use(cors())
 
 
-
-mongoose.connect('mongodb+srv://bob:12345@cluster0.92uyxhl.mongodb.net/BissHotella',{
+mongoose.connect('mongodb+srv://root:123qwe@cluster0.zzc35pw.mongodb.net/kuy',{
     useNewUrlParser : true,
 }).then(()=>{
     console.log("connected to db")
-}).catch(()=>{
+}).catch((e)=>{
     console.log("error in connection")
 })
 
 app.use(express.static(path.join(__dirname,'public')))
-app.use(express.static(path.join(__dirname,'public/home_main')))
-app.use(express.static(path.join(__dirname,'public/Login_page')))
-app.use(express.static(path.join(__dirname,'public/navbar_zone')))
-app.use(express.static(path.join(__dirname,'public/roomtypes')))
 
 
-const registrationSchema = new mongoose.Schema({
-    nameIn: String,
-    surnameIn: String,
-    phoneIn: String
-});
+
 
 
 
@@ -44,13 +35,29 @@ app.set('view engine','ejs')
 app.use(flash())
 
 
+// User Schema
+require("./public/UserDetails")
 
-const home_page = path.join(__dirname, 'public/home_main/home.ejs')
-const login_page = path.join(__dirname, 'public/Login_page/login.ejs')
-const register_page = path.join(__dirname, 'public/Register/register.ejs')
-const roomtype_page = path.join(__dirname, 'public/roomtypes/roomtype.ejs')
-const booking_page = path.join(__dirname, 'public/booking/booking.ejs')
-
+const User = mongoose.model("UserInfo");
+app.post("/register",async(req,res)=>{
+   const {fname,sname,email,phone,sex,country,Birthday,password,cpassword,} = req.body
+   try{
+        await User.create({
+            fname,
+            sname,
+            email,
+            phone,
+            sex,
+            country,
+            Birthday,
+            password,
+            cpassword,
+        })
+     res.send({status:"ok"})
+    }catch(error){
+     res.send({status:"NO OK"})
+    }
+});
 
 
 router.get("/", (req, res) => {
@@ -64,9 +71,6 @@ router.get("/login", (req, res) => {
     })
 })
 
-router.get('/register', (req, res) => {
-    res.render(register_page)
-})
 
 router.get("/roomtypes", (req, res) => {
     res.status(200)

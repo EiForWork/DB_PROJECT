@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from '../navbar/navbar';
 import Footer from '../footer/footer';
-import '../roomtypes/ro.css'
+import './roomtypes.css'
 
 function Room() {
   return (
