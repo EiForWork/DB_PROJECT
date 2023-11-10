@@ -9,7 +9,7 @@ const cors = require('cors')
 app.use(cors())
 
 
-mongoose.connect('mongodb+srv://root:123qwe@cluster0.zzc35pw.mongodb.net/kuy',{
+mongoose.connect('mongodb+srv://bob:12345@cluster0.92uyxhl.mongodb.net/BissHotella',{
     useNewUrlParser : true,
 }).then(()=>{
     console.log("connected to db")
