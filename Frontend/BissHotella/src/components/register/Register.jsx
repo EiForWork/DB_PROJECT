@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../register/re.css'
 import Navbar from '../navbar/navbar';
-import Footer from '../footer/footer';
+import Footer from '../footer/Footer';
 
 
 function Register() {

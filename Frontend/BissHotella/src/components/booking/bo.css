@@ -54,18 +54,54 @@ body{
         background-color: rgb(255, 187, 86);
         color: rgb(255, 255, 255);
     }
-    
+
+    /* CART TOPIC */
+    .topiccart{
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        align-items: start;
+        color: black;
+        margin-left: 80px;
+        margin-right: 80px;
+        font-size:30px;
+    }
+
+
+
+    .cart-info h1{
+        color: black;
+    }
+
+    .topiccart h2{
+        padding-left: 10px;
+    }
+
+    .topiccart hr{
+        border: 2px solid rgb(109, 109, 109);
+        border-radius: 10px;
+        width: 100%;
+        margin-top: -10px;
+    }
     
     /* cart items*/
     
     .cart-page{
         margin: 80px auto;
+        margin-top: 20px;
         margin-left: 80px;
         margin-right: 80px;
+        display: flex;
     }
+
+    hr{
+        width: 120%;
+    }
+
+    
     
     table{
-        width:60%;
+        width:65%;
         border-collapse:collapse;
     }
     
@@ -77,21 +113,26 @@ body{
     th{
         text-align: left;
         padding:5px;
-        color:rgb(0, 0, 0);
-        background: rgb(255, 122, 14);
+        color: #FFF;
+        background-color: rgb(169, 77, 255);
         font-weight:bold;
-        box-shadow: 0px 0px 10px rgb(255, 122, 14);
-        
+        box-shadow: 0px 0px 10px rgb(169, 77, 255);
+        height: 30px;
     }
     
     td{
-        padding: 10px 5px;
+        /* padding-top: 20px; */
+
+        padding: 20px 5px;
     }
     
     td input{
-        width: 40px;
+        width: 50px;
         height: 30px;
         padding: 5px;
+        box-shadow: 0px 0px 4px rgb(158, 158, 158);
+        border: 0;
+        border-radius: 10px;
     }
     
     td a{
@@ -100,17 +141,86 @@ body{
     }
     
     td img{
-        width: 550px;
-        height: 300px;
+        width: 400px;
+        height: 250px;
         margin-right: 10px;
         border-radius: 20px;
+        margin-left: 30px;
     }
     
     table small{
         font-size: 20px;
         font-weight: bold;
     }
+
     
+    .payment{
+        margin-left: 40px;
+        width: 40%;
+        height: 100;
+        background-color: rgb(169, 77, 255);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgb(169, 77, 255);
+    }
+
+    .paymethod{
+        color: white;
+        width: 85%;
+        display: block;
+        height: 100px;
+    }
+
+    .payselect{
+        display: flex;
+        justify-content: space-around;
+        margin-top: 10px;
+    }
     
-    
-    
+    .paybox{
+        background-color: rgb(192, 124, 255);
+        width: 130px;
+        height: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius:10px;
+    }
+
+    .paymethod span{
+        font-size: 20px;
+        font-weight: bold;
+        margin-left: 15px;
+    }
+
+    .paybox img{
+        height: 50px;
+        width: 60px;
+    }
+
+    .payment hr{
+        width: 100%;
+        border: 0;
+        background-color: rgb(189, 138, 255);
+        height: 2px;
+    }
+
+
+    .totalPrice{
+        display: flex;
+        flex-direction: column;
+        width: 85%;
+        height: 100px;
+        justify-content: center;
+    }
+
+    .toPrice{
+        display: flex;
+        justify-content: space-between;
+        margin: 30px;
+        color: #FFF;
+        font-size: 20px;
+        font-weight: bold;
+    }
