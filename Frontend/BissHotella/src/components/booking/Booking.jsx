@@ -1,6 +1,6 @@
 import React from 'react';
 import '../booking/bo.css';
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import luxury from '../booking/img/luxury.png'
 import pool from '../booking/img/pool.png'
 import deluxe from '../booking/img/deluxe.png'
@@ -13,7 +13,7 @@ import {createBrowserRouter,RouterProvider,Route,Link} from 'react-router-dom'
 
 function Booking() {
 
-  const [PoAmo,setPo] = useState(1)
+  const [PoAmo,setPo] = useState(0)
   const [PoPrice,setPoP] = useState(5000)
 
   const [DeAmo,setDe] = useState("")
@@ -35,9 +35,14 @@ function Booking() {
     } else if (e.key === 'ArrowUp') {
       setPo((PoAmo) => PoAmo+1);
     }
-    
   };
 
+  const totalPrice = 0
+
+  useEffect(() => {
+    const totalPrice =+ (PoAmo * PoPrice)
+    setPrice(totalPrice);
+  }, [PoAmo, PoPrice, /* when they are using will useEffect*/]);
   
 
   return (
@@ -77,8 +82,8 @@ function Booking() {
               </div>
             </div>
           </td>
-          <td><input type="number" value={PoAmo} min={1} max={10} onChange={(e)=>setPo(e.target.value)}  onKeyDown={addOrminus} /></td>
-          <td>{"$"+setPoP(PoPrice*PoAmo)}</td>
+          <td><input type="number" value={PoAmo} min={0} max={10} onChange={(e)=>setPo(e.target.value)}  onKeyDown={addOrminus} /></td>
+          <td>${PoPrice*PoAmo}</td>
         </tr>
 
         <hr/>

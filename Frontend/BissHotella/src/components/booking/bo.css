@@ -94,6 +94,10 @@ body{
         display: flex;
     }
 
+    .cart-info img{
+        box-shadow: -3px 0px 10px rgb(102, 102, 102);
+    }
+
     hr{
         width: 120%;
     }
@@ -224,3 +228,5 @@ body{
         font-size: 20px;
         font-weight: bold;
     }
+
+   
