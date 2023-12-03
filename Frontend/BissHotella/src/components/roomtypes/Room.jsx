@@ -1,25 +1,25 @@
 import React from 'react';
 import Navbar from '../navbar/navbar';
-import Footer from '../footer/footer';
-import './ro.css'
+import Footer from '../footer/Footer';
+import '../roomtypes/ro.css'
 
 function Room() {
   return (
     <>
 <Navbar/>
     <div className="room">
-      <div className="pic-pre">
+      <div className="picpre">
         <div className="left">
-          <div className="pic-top"></div>
+          <div className="pictop"></div>
 
           <div className="bottom">
-            <div className="bot-pic"></div>
-            <div className="bot-pic2"></div>
+            <div className="botpic"></div>
+            <div className="botpic2"></div>
           </div>
         </div>
 
         <div className="right">
-          <div className="text-all">
+          <div className="textall">
             <h1>Enjoy Your Rest | Enjoy Your Life</h1>
             <p style={{ marginTop: '50px' }}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -31,14 +31,14 @@ function Room() {
         </div>
       </div>
 
-      <div className="party-room-pic">
-        <div className="party-topic">Party Room</div>
+      <div className="partyroompic">
+        <div className="partytopic">Party Room</div>
       </div>
 
-      <div className="party-detail">
-        <div className="topic-par">Detail</div>
-        <div className="detail-all-par">
-          <div className="par-detail">
+      <div className="partydetail">
+        <div className="topicpar">Detail</div>
+        <div className="detailallpar">
+          <div className="pardetail">
             <h1>Room Detail</h1>
             <ul>
               <li>Price / Night: 200,000 THB</li>
@@ -48,7 +48,7 @@ function Room() {
             </ul>
           </div>
 
-          <div className="par-use">
+          <div className="paruse">
             <h1>Service Usage</h1>
             <ul>
               <li>Soap</li>
@@ -57,7 +57,7 @@ function Room() {
             </ul>
           </div>
 
-          <div className="par-room-service">
+          <div className="parroomservice">
             <h1>Service</h1>
             <ul>
               <li>Luxury meal set</li>
@@ -66,7 +66,7 @@ function Room() {
             </ul>
           </div>
 
-          <div className="par-faci">
+          <div className="parfaci">
             <h1>Facilities</h1>
             <ul>
               <li>Fitness</li>
@@ -76,7 +76,7 @@ function Room() {
             </ul>
           </div>
 
-          <div className="par-park">
+          <div className="parpark">
             <h1>Parking</h1>
             <ul>
               <li>Car Capacity: 5</li>
@@ -86,14 +86,16 @@ function Room() {
         </div>
       </div>
 
-      <div className="party-room-pic2">
-        <div className="party-topic2">Deluxe Room</div>
+      {/* ------------------------------------------------------------------------------------------------------------ */}
+
+      <div className="partyroompic2">
+        <div className="partytopic2">Deluxe Room</div>
       </div>
 
-      <div className="party-detail">
-        <div className="topic-par">Detail</div>
-        <div className="detail-all-par">
-          <div className="par-detail">
+      <div className="partydetail">
+        <div className="topicpar">Detail</div>
+        <div className="detailallpar">
+          <div className="pardetail">
             <h1>Room Detail</h1>
             <ul>
               <li>Price / Night: 100,000 THB</li>
@@ -103,32 +105,34 @@ function Room() {
             </ul>
           </div>
 
-          <div className="par-use">
+          <div className="paruse">
             <h1>Service Usage</h1>
           </div>
 
-          <div className="par-room-service">
+          <div className="parroomservice">
             <h1>Service</h1>
           </div>
 
-          <div className="par-faci">
+          <div className="parfaci">
             <h1>Facilities</h1>
           </div>
 
-          <div className="par-park">
+          <div className="parpark">
             <h1>Parking</h1>
           </div>
         </div>
       </div>
 
-      <div className="party-room-pic3">
-        <div className="party-topic">Luxury Room</div>
+        {/* ------------------------------------------------------------------------------------------------------------ */}
+
+      <div className="partyroompic3">
+        <div className="partytopic">Luxury Room</div>
       </div>
 
-      <div className="party-detail">
-        <div className="topic-par">Detail</div>
-        <div className="detail-all-par">
-          <div className="par-detail">
+      <div className="partydetail">
+        <div className="topicpar">Detail</div>
+        <div className="detailallpar">
+          <div className="pardetail">
             <h1>Room Detail</h1>
             <ul>
               <li>Price / Night: 100,000 THB</li>
@@ -142,15 +146,15 @@ function Room() {
             <h1>Service Usage</h1>
           </div>
 
-          <div className="par-room-service">
+          <div className="parroomservice">
             <h1>Service</h1>
           </div>
 
-          <div className="par-faci">
+          <div className="parfaci">
             <h1>Facilities</h1>
           </div>
 
-          <div className="par-park">
+          <div className="parpark">
             <h1>Parking</h1>
           </div>
         </div>

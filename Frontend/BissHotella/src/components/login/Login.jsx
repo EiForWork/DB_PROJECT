@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from '../navbar/navbar';
 import Footer from '../footer/Footer.jsx';
-import {createBrowserRouter,RouterProvider,Route,Link, json} from 'react-router-dom'
+import {createBrowserRouter,RouterProvider,Route,Link, json, useNavigate} from 'react-router-dom'
 import '../login/login1.css'
 import s1 from './img/appleicon.png'
 import s2 from './img/fficon.png'
@@ -10,22 +10,34 @@ import { useState } from 'react';
 
 function Login() {
 
+  const navigate = useNavigate()
+
   const [takeEmail,setEmail] = useState('')
   const [takePassword,setPas] = useState('')
 
   const submitForm = (e) =>{
     e.preventDefault();
     const loginInfo = {
-      takeEmail,takePassword
+      takeEmail,
+      takePassword
     }
+
+    //Check before Login to system
+    for(let key in loginInfo){
+      if(loginInfo[key] === '' || loginInfo[key] === null){
+        return alert(`Please fill your Infomation`)
+      }
+    }
+
     console.log(loginInfo) //Show For Example
+    
     fetch("http://localhost:8080/login",{
       method:"POST",
+      credentials:"include",
       crossDoamin:true,
       headers:{
         "Content-Type":"application/json",
         Accept:"application/json",
-        "Access-Control-Allow-Origin":"*"
       },
       body:JSON.stringify({
         takeEmail,
@@ -33,10 +45,16 @@ function Login() {
       })
     }).then((res)=>res.json())
     .then((loginInfo)=>{
-      console.log(loginInfo,"userRegister")
+      if(loginInfo.status === "Success"){
+        alert("Welcome to the Hotel")
+        navigate('/')
+      }else{
+
+      }
+      console.log(loginInfo,"User Login")
     })
-    .catch((error)=>{
-      console.log("Error to sent check")
+    .catch((err)=>{
+      console.log("Error to sent check",err)
     })
 
   }//end Function

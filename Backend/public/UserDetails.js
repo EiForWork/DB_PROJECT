@@ -9,7 +9,6 @@ const UserDetailsSch = new mongoose.Schema(
         Birthday:Date,
         email:{type:String,unique:true},
         password:String,
-        cpassword:String,
     },
     {
         collection:"customers",

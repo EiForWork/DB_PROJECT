@@ -2,38 +2,61 @@ import React, { useState,useEffect } from 'react';
 import '../register/re.css'
 import Navbar from '../navbar/navbar';
 import Footer from '../footer/Footer';
+import { redirect, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+
 
 
 function Register() {
   
-const [fname,setName] = useState('')
-const [sname,setsName] = useState('')
+const [Name,setName] = useState('')
+const [Surname,setsName] = useState('')
 const [email,setEmail] = useState('')
 const [password,setPassword] = useState('')
 const [cpassword,setCpassword] = useState('')
 const [phone,setPhone] = useState('')
 const [country,setCoun] = useState('')
-const [Birthday,setBirth] = useState('')
+const [birthday,setBirth] = useState('')
 const [sex,setsex] = useState('')
 
+const navigate = useNavigate()
 
 
 const handleSubmit = (e) =>{
   e.preventDefault();
   const data={
-    fname,
-    sname,
-    email,
+    Name,
+    Surname,
     phone,
     sex,
     country,
-    Birthday,
+    birthday,
+    email,
     password,
-    cpassword,
+    cpassword
   } 
+
+  for (const key in data) {
+    if (data[key] === "" || data[key] === null) {
+      return alert(`Please fill in all fields : ${key}`);
+    }
+  }
+
+  //Comfirm Password
   if(password != cpassword){
     return alert("Password incorrect")
   }
+
+    // Convert the birthday string to a Date object
+    const birthDate = new Date(birthday);
+    const currentYear = new Date().getFullYear();
+    const cmpAge = currentYear - birthDate.getFullYear()
+    
+    // Check if the age is less than 18
+    if (cmpAge < 18) {
+      return alert("Under 18 cannot be registered");
+    }  
+
   console.log(data)
   fetch("http://localhost:8080/register",{
     method:"POST",
@@ -44,22 +67,28 @@ const handleSubmit = (e) =>{
       "Access-Control-Allow-Origin":"*",
     },
     body:JSON.stringify({
-      fname,
-      sname,
-      email,
+      Name,
+      Surname,
       phone,
       sex,
       country,
-      Birthday,
+      birthday,
+      email,
       password,
-      cpassword,
+      cpassword
     }),
   })
   .then((res)=>res.json())
   .then((data)=>{
+    if(data.status === 201){
+      alert(data.message)
+      navigate("/login") //Navigiate When successfully
+    }
+    
     if(data.status === 400){
       alert(data.message)
     }
+
     console.log(data,"userRegister")
 
   })

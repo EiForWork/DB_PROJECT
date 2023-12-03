@@ -15,7 +15,6 @@ body{
             rgba(0, 0, 0, 0.3),
             rgba(255, 255, 255, 0.7)),
          url('./img/dinner.jpg');
-        color: rgb(243, 169, 32);
         background-position: center;
         font-size: 20px;
     }
@@ -26,6 +25,7 @@ body{
         background-color: rgb(255, 255, 255);
         height: 100px;
         display: flex;
+        flex-direction: row;
         justify-content: space-around;
         align-items: center;
         box-shadow: 0 0 5px rgb(255, 244, 244);
