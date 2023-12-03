@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import '../register/re.css'
 import Navbar from '../navbar/navbar';
 import Footer from '../footer/Footer';
@@ -17,6 +17,7 @@ const [Birthday,setBirth] = useState('')
 const [sex,setsex] = useState('')
 
 
+
 const handleSubmit = (e) =>{
   e.preventDefault();
   const data={
@@ -30,6 +31,9 @@ const handleSubmit = (e) =>{
     password,
     cpassword,
   } 
+  if(password != cpassword){
+    return alert("Password incorrect")
+  }
   console.log(data)
   fetch("http://localhost:8080/register",{
     method:"POST",
@@ -53,12 +57,19 @@ const handleSubmit = (e) =>{
   })
   .then((res)=>res.json())
   .then((data)=>{
+    if(data.status === 400){
+      alert(data.message)
+    }
     console.log(data,"userRegister")
+
   })
   .catch((error)=>{
     console.log("Fail userRegister")
   })
 }
+
+    
+
 
 
   return (
@@ -133,6 +144,8 @@ const handleSubmit = (e) =>{
             <input
               className="regisbutton"
               type="submit"
+              onClick={handleSubmit}
+              value={"Submit"}
             />
           </form>
         </div>

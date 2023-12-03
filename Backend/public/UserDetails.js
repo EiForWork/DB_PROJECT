@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 const UserDetailsSch = new mongoose.Schema(
     {
-        fname:{type:String},
+        fname:String,
         sname:String,
-        email:String,
         phone:String,
         sex:String,
         country:String,
         Birthday:Date,
+        email:{type:String,unique:true},
         password:String,
         cpassword:String,
     },

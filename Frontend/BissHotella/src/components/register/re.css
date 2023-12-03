@@ -21,6 +21,9 @@ body{
         height: 800px;
         background: transparent;
         backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     
     .registext{
@@ -28,7 +31,6 @@ body{
         height: 100px;
         display: flex;
         justify-content: center;
-        
     }
     
     .registext p{
@@ -56,6 +58,7 @@ body{
         font-weight: bold;
         justify-content: center;
         align-items: center;
+   
     }
     
     .box1 div{
@@ -79,6 +82,7 @@ body{
         font-weight: bold;
         justify-content: center;
         align-items: center;
+        
     }
     
     .gender{
@@ -118,24 +122,65 @@ body{
         width:100%;
         color: #fff;
         font-weight: bold;
-        justify-content: center;
+        justify-content:space-around;
         align-items: center;
+    }
+    .box3un div{
+        margin-right: 50px;
+        margin-left: 50px;
     }
     
     .emailform{
-        height: 60px;
-        ;
+        padding-right: 0px;
+        width: 100%;
     }
     .emailform input{
-        width: 100%;
+        width:100%;
         border: none;
         background: none;
         border-bottom:2px solid #fff;
-        width: 250px;
+        width: 100%;
         color: #fff;
         height: 25px;
     }
     
+    .country{
+        width: 100% ;
+    }
+    .country select{
+        width:100%;
+        height: 25px;
+        border-width:0px ;
+        border-bottom:2px solid #fff;
+        background: transparent;
+        color: #fff;
+    }
+    .country option{
+        background-color:rgb(99, 102, 255);
+    }
+    
+    .date{
+        width: 100%;
+    }
+
+
+    .date input{
+        width:100%; 
+        height: 25px;
+        border-width:0px ;
+        border-bottom:2px solid #fff;
+        background: transparent;
+        color: #fff;
+    }
+
+
+
+
+
+
+
+
+
     .passwordform{
         display: flex;
         width:100%;
@@ -171,4 +216,18 @@ body{
         box-shadow: 0px 0px 5px rgb(22, 93, 245);
         cursor: pointer;
         font-weight: bold;
+        transition: 0.5s;
     }
+
+    .regisbutton:hover{
+        background-color: rgb(132, 134, 255);
+        transition: 0.5s;
+    }
+  
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+ 

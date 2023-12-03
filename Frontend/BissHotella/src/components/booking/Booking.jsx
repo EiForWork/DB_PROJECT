@@ -16,8 +16,11 @@ function Booking() {
   const [PoAmo,setPo] = useState(0)
   const [PoPrice,setPoP] = useState(5000)
 
-  const [DeAmo,setDe] = useState("")
-  const [LuAmo,setLu] = useState("")
+  const [DeAmo,setDe] = useState(0)
+  const [DeluxePrice,SetDeluxe] = useState(500)
+
+  const [LuxuryAmo,setLu] = useState(0)
+  const [LuxPrice,setLux] = useState(50000)
 
   const[AllPrice,setPrice] = useState(0)
 
@@ -28,7 +31,7 @@ function Booking() {
   let roomtypes = ["Party Room","Deluxe Room","Luxury Room"]
 
 
-  const addOrminus = (e) => {
+  const PoolvilaFunc = (e) => {
     e.preventDefault();
     if (e.key === 'ArrowDown') {
       setPo((PoAmo) => Math.max(PoAmo - 1, 1));
@@ -37,20 +40,42 @@ function Booking() {
     }
   };
 
+  const DeluxeFunc = (e) => {
+    e.preventDefault();
+    if (e.key === 'ArrowDown') {
+      setDe((DeAmo) => Math.max(DeAmo - 1, 1));
+    } else if (e.key === 'ArrowUp') {
+      setDe((DeAmo) => DeAmo+1);
+    }
+  };
+
+  const LuxuryFunc = (e) => {
+    e.preventDefault();
+    if (e.key === 'ArrowDown') {
+      setLu((LuxuryAmo) => Math.max(LuxuryAmo - 1, 1));
+    } else if (e.key === 'ArrowUp') {
+      setLu((LuxuryAmo) => LuxuryAmo+1);
+    }
+  };
+
+
+
+
+  // All Price you have to pay it
   const totalPrice = 0
 
   useEffect(() => {
-    const totalPrice =+ (PoAmo * PoPrice)
+    const totalPrice =+ ((PoAmo * PoPrice)+(DeAmo*DeluxePrice)+(LuxuryAmo*LuxPrice))
     setPrice(totalPrice);
-  }, [PoAmo, PoPrice, /* when they are using will useEffect*/]);
+  }, [PoAmo,PoPrice,DeAmo,DeluxePrice,LuxuryAmo,/* when they are using will useEffect*/]);
   
 
   return (
   <>
     <div className="checkVisbox">
       <h1 className="booking-title">Booking And Check Here</h1>
-      <form className="bookingCheck">
-        <input type="date" id="CheckIn" placeholder="CheckIn" />
+      <form className="bookingCheck">Check In
+        <input type="date" id="CheckIn" placeholder="CheckIn" />Check Out 
         <input type="date" id="CheckOut" placeholder="CheckOut" />
         <button>Check Availability</button>
       </form>
@@ -82,7 +107,7 @@ function Booking() {
               </div>
             </div>
           </td>
-          <td><input type="number" value={PoAmo} min={0} max={10} onChange={(e)=>setPo(e.target.value)}  onKeyDown={addOrminus} /></td>
+          <td><input type="number" value={PoAmo} min={0} max={10} onChange={(e)=>setPo(e.target.value)}  onKeyDown={PoolvilaFunc} /></td>
           <td>${PoPrice*PoAmo}</td>
         </tr>
 
@@ -100,8 +125,8 @@ function Booking() {
               </div>
             </div>
           </td>
-          <td><input type="number" value="1" min="1" max="9"/></td>
-          <td>$50</td>
+          <td><input type="number" value={DeAmo} min={0} max={10} onChange={(e)=>setDe(e.target.value)}  onKeyDown={PoolvilaFunc} /></td>
+          <td>${DeluxePrice*DeAmo}</td>
         </tr>
 
         <hr/>
@@ -117,8 +142,8 @@ function Booking() {
               </div>
             </div>
           </td>
-          <td><input type="number" value="1" /></td>
-          <td>$50</td>
+          <td><input type="number" value={LuxuryAmo} min={0} max={10} onChange={(e)=>setLu(e.target.value)}  onKeyDown={LuxuryFunc} /></td>
+          <td>${LuxPrice*LuxuryAmo}</td>
         </tr>
 
         <hr/>
@@ -162,7 +187,9 @@ function Booking() {
               <p>Total</p>
               <p>${AllPrice}</p>
             </div>
-          </div>
+        </div>
+
+        <input type="submit"value={"Pay"} className='Paybt'/>
 
 
       </form>

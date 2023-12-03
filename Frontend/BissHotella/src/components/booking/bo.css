@@ -15,9 +15,9 @@ body{
             rgba(0, 0, 0, 0.3),
             rgba(255, 255, 255, 0.7)),
          url('./img/dinner.jpg');
-         color: rgb(255, 255, 255);
-        
+        color: rgb(243, 169, 32);
         background-position: center;
+        font-size: 20px;
     }
     
     .bookingCheck{
@@ -53,6 +53,9 @@ body{
         border-radius: 10px;
         background-color: rgb(255, 187, 86);
         color: rgb(255, 255, 255);
+        border-width: 0;
+        box-shadow:0px 0px 5px rgb(255, 187, 86);
+        font-size: 15px;
     }
 
     /* CART TOPIC */
@@ -229,4 +232,21 @@ body{
         font-weight: bold;
     }
 
-   
+   .Paybt{
+    width: 80%;
+    height: 60px;
+    border-radius: 10px;
+    border-width: 0;
+    background-color: rgb(205, 152, 255);
+    font-size:20px ;
+    font-weight: 700;
+    transition: 0.5s;
+    box-shadow: 0px 0px 4px rgb(255, 255, 255);
+    color: #FFF;
+   }
+
+   .Paybt:hover{
+    border-color: #FFF;
+    box-shadow: 0px 0px 20px rgb(254, 253, 255);
+    transition: 0.5s;
+   }

@@ -6,13 +6,18 @@ const mongoose = require('mongoose')
 const session = require('express-session');
 const flash = require('connect-flash');
 const cors = require('cors')
+const bcrypt = require('bcrypt')
+const jwt = require("jsonwebtoken")
+
+const JWT_SECRET = "fjghtuyoiuasdasdade()weqeifsdfsdjhfikefhkds"
+
 app.use(cors())
 
 
 mongoose.connect('mongodb+srv://bob:12345@cluster0.92uyxhl.mongodb.net/BissHotella',{
     useNewUrlParser : true,
 }).then(()=>{
-    console.log("connected to db")
+    console.log("Connected to Mongodb")
 }).catch((e)=>{
     console.log("error in connection")
 })
@@ -41,16 +46,25 @@ require("./public/UserDetails")
 const User = mongoose.model("UserInfo");
 app.post("/register",async(req,res)=>{
    const {fname,sname,email,phone,sex,country,Birthday,password,cpassword,} = req.body
+   const encryptPassword = await bcrypt.hash(password,10)
    try{
+
+    //find Email in Database
+    const oldUser = await User.findOne({email})
+
+    //if email is doubly its will return a error
+    if(oldUser){
+        return   res.send({status:400,error: "User Exists", message: "Email is already registered" });
+    }
         await User.create({
             fname,
             sname,
             email,
-            phone,
+            phone, 
             sex,
             country,
             Birthday,
-            password,
+            password:encryptPassword,
             cpassword,
         })
      res.send({status:"ok"})
@@ -59,37 +73,36 @@ app.post("/register",async(req,res)=>{
     }
 });
 
+//LOGIN API
+
+app.post("/login",async(req,res)=>{
+
+  const {email,password1} = req.body;
+
+  const user = await User.findOne({email});
+  if(!user){
+    return   res.json({error: "User Not found",  });
+}
+
+    const passwordMatch = await bcrypt.compare(password1,user.password)
+
+    if(passwordMatch){
+    const token = jwt.sign({},JWT_SECRET);
+    if(res.status(201)){
+        return res.json({status:"OK",data:token})
+    }else{
+        return res.json({error:"Error"})
+    }
+}
+res.json({staus:"Error",error:"Invalid Password"})
+})
+
+
 
 router.get("/", (req, res) => {
-    res.status(200)
-    res.render(home_page)
-})
-
-router.get("/login", (req, res) => {
-    res.render(login_page,{
-        errors:req.flash('validationErrors')
-    })
 })
 
 
-router.get("/roomtypes", (req, res) => {
-    res.status(200)
-    res.type('text/css')
-    res.render(roomtype_page)
-})
-
-router.get("/booking", (req, res) => {
-    res.render(booking_page)
-})
-
-
-const regisSchema = new mongoose.Schema({
-    name:{type:String,required:true}
-})
-const collection = new mongoose.model('Customers',regisSchema)
-
-router.post("/submit",(req,res)=>{
-});
 
 
 
