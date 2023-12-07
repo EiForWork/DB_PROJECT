@@ -6,11 +6,36 @@ import {createBrowserRouter,RouterProvider,Route,Link} from 'react-router-dom'
 
 function Navbar() {
 
-  const [auth,setAuth] = useState(false)
+  // const [auth,setAuth] = useState(true)
+  // const [id,setId] = useState('')
+  // const [message,setMessage]  = useState('') 
 
-  useEffect(()=>{
-    
-  })
+  // useEffect(() => {
+  //   // Assuming you are using fetch to make an HTTP request to check authentication status
+  //   fetch('http://localhost:8080', {
+  //     method: 'GET',
+  //     headers: {
+  //       // Add any headers needed for authentication check
+  //       'Content-Type': 'application/json',
+  //       // You may need to include authentication tokens or other headers here
+  //     },
+  //     credentials: 'include', // Include this if you are dealing with cookies or sessions
+  //   })
+  //     .then((loginInfo) => {
+  //       if ( loginInfo.status === "Success") {
+  //         // Authentication successful
+  //         setAuth(true);
+  //       } else {
+  //         // Authentication failed
+  //         setAuth(false);
+  //         next();
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error checking authentication status:', error);
+  //     });
+  // }, []);
+
 
   return (
     <>
@@ -19,7 +44,7 @@ function Navbar() {
         <img className="logo" src={logo}/>
         </div>
        
-        { auth ?
+        {/* { auth ? */}
     <div className="listnav">
         <ul className="ulnav">
             <li><Link to="/">Home</Link></li>
@@ -30,7 +55,7 @@ function Navbar() {
         </ul>
     </div>
     : null // Render nothing if auth is false
-          }
+          {/* } */}
 
 
         <div className="buttonnav">

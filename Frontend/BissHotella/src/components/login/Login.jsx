@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../navbar/navbar';
+import Navbar from '../navbar/Navbar.jsx';
 import Footer from '../footer/Footer.jsx';
 import {createBrowserRouter,RouterProvider,Route,Link, json, useNavigate} from 'react-router-dom'
 import '../login/login1.css'
@@ -52,6 +52,8 @@ function Login() {
 
       }
       console.log(loginInfo,"User Login")
+
+  
     })
     .catch((err)=>{
       console.log("Error to sent check",err)

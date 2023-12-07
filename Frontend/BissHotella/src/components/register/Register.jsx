@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import '../register/re.css'
-import Navbar from '../navbar/navbar';
+import Navbar from '../navbar/Navbar';
 import Footer from '../footer/Footer';
 import { redirect, useNavigate } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
@@ -86,7 +86,7 @@ const handleSubmit = (e) =>{
     }
     
     if(data.status === 400){
-      alert(data.message)
+      alert("Email is already in use")
     }
 
     console.log(data,"userRegister")
