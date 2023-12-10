@@ -10,15 +10,15 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const { decode } = require('punycode');
 const {v4:uuidv4 } = require('uuid')
-const env = require('dotenv');
+// const env = require('dotenv');
 const Stripe = require('stripe');
 const stripe = Stripe('sk_test_51OLLwFH1Rn2e5SsUrhRWBAymo6rPWDTlMxelVcKZNarsan1iorMrUHcjY6y8yglJjTJFPFj4uX2bKfrAI4OrC42q00AYIFyWAg');
 const endpointSecret = "whsec_83e9f3fd09a0cf17e6b2b8e305b5d34263a707849f548e80a6f0cfac0882f6ac";
 
-require('dotenv').config()
-
-
 // require('dotenv').config()
+
+
+// // require('dotenv').config()
 
 
 //Middleware // Session Setting
@@ -61,6 +61,54 @@ connection.connect((err)=>{
     console.log("Success Connected")
 })
 
+//WEBHOOK
+app.post('/webhook', express.raw({type: 'application/json'}), async (req, res) => {
+  const sig = req.headers['stripe-signature']
+
+  let event
+
+  try {
+    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret)
+  } catch (err) {
+    console.log("Webhook Error",err)
+    res.status(400).send(`Webhook Error: ${err.message}`)
+    return
+  }
+
+  // Handle the event
+  switch (event.type) {
+    case 'checkout.session.completed':
+      const paymentSuccessData = event.data.object
+      const sessionId = paymentSuccessData.id
+      console.log(paymentSuccessData,sessionId+"FROM WEBHOOKKKKKKKKKKKKKK")
+      const data = {
+        status: paymentSuccessData.status
+      }
+
+      const result = await connection.query(
+        'UPDATE orders_info SET ? WHERE session_id = ?',
+        [data, sessionId]
+      )
+
+      console.log('=== update result', result)
+
+      // event.data.object.id = session.id
+      // event.data.object.customer_details คือข้อมูลลูกค้า
+      break
+    default:
+      console.log(`Unhandled event type ${event.type}`)
+  }
+
+  // Return a 200 response to acknowledge receipt of the event
+  res.send()
+})
+app.use(express.json())
+
+
+
+
+
+
 
 //next is a middleware if we will call
 const verifyUser = (req,res,next) => {
@@ -97,7 +145,6 @@ app.get('/', verifyUser, (req, res) => {
 //REGISTER ZONE
 const insertData = "INSERT INTO customer(fname,lastname,phone,sex,country,birthday,email,password) VALUES (?,?,?,?,?,?,?,?)";
 
-
 app.post("/register", async (req, res) => {
     const { Name, Surname, phone, sex, country, birthday, email, password } = req.body;
     //Hashing Password Before the Send //hash,salt
@@ -122,18 +169,16 @@ app.post("/register", async (req, res) => {
 
 
 // LOGIN ZONE
-let FindUser = "SELECT email, password FROM customer WHERE email = ?";
+let FindUser = "SELECT email,password FROM customer WHERE email = ?";
 let FindID  = "SELECT id FROM customer WHERE email = ?"
 app.post("/login", async (req, res) => {
     const { takeEmail, takePassword } = req.body;
-    
     connection.query(FindUser, [takeEmail], async (err, result) => {
       // Checking Error
       if (err) {
         console.error("Error during login:", err);
         return res.status(500).json({ message: "Internal Server Error" });
       }
-  
       try {
         if (result.length > 0) {
           const hashedPassword = result[0].password;
@@ -152,12 +197,8 @@ app.post("/login", async (req, res) => {
               "our-jsonwebtoken-secret-key",{expiresIn: "1d"});
               console.log(UserID,token,result)
               res.cookie('token',token);
-
-
               return res.status(200).json({ message: "Login successful", status: "Success" });
               //SUCCESS
-            
-
             });
           } else {
             return res.status(401).json({ message: "Invalid email or password" });
@@ -175,7 +216,7 @@ const getUserData = "   SELECT fname,lastname,phone,email FROM customer WHERE id
 // Get user data route
 app.get("/getuserdata",verifyUser, (req, res) => {
   const userID = req.UserID;
-  console.log(userID + " Value in cookie from middleware");
+  // console.log(userID + " Value in cookie from middleware");
     connection.query(getUserData, [userID], (err, result) => {
       if (err) {
         return res.json({ message: "Internal Server Error" });
@@ -190,7 +231,7 @@ app.get("/getuserdata",verifyUser, (req, res) => {
         phone: result[0].phone,
         email: result[0].email,
       };
-      console.log(userData)
+      // console.log(userData)
       return res.status(200).json(userData);
     });
   });
@@ -214,10 +255,28 @@ app.get("/getuserdata",verifyUser, (req, res) => {
     });
   });
 
+
+
+
+const FindEmail ="SELECT email FROM customer WHERE id = ?"
 //ok
 app.post("/api/checkout",express.json(),async(req,res)=>{
-try{
+
+
+  try{
+
+// //Find Email
+// const userID = req.UserID;
+// connection.query(FindEmail,[userID],(err,result)=>{
+//   if(err) return res.json({message:"Internal Server Error"})
+
+// })
+
+
   const {user,product} = req.body
+  // const {BookingData} = req.body
+  // const {users} = req.body
+  // const {User,products} = req.body
   const orderID = uuidv4()
   //Use API KEY SECRET KEY
   const session = await stripe.checkout.sessions.create({
@@ -227,11 +286,11 @@ try{
         price_data: {
           currency: 'thb',
           product_data: {
-            name: product.name,
+            name:user.email, //Fix this
           },
-          unit_amount: product.price * 100,
+          unit_amount:product.price*100,  //Price Hotel
         },
-        quantity: product.quantity,
+        quantity: product.quantity,  //All Amout
       },
     ],
     mode: 'payment',
@@ -239,19 +298,24 @@ try{
     cancel_url : `http://localhost:8081/fail.html?id=${orderID}`
   });
 
-//Store in database
+// Store in database
 const orderData = {
-  fname: user.name,
-  lname: user.lname,
-  order_id: orderID,
+  email: user.email,
   session_id: session.id,
+  order_id: orderID,
   status: session.status,
+  check_in: user.checkin,
+  check_out:user.checkout,
+  Details:user.detail,
+  TotalPrice:user.total
 }
 
-console.log(session)
 
- await connection.query('INSERT INTO orders SET ?',orderData,(err,result)=>{
-  res.json({user,product,order:result})
+console.log(session,user.checkin)
+
+ connection.query('INSERT INTO orders_info SET ?',orderData,(err,result)=>{
+  if(err){console.log(err)}
+  res.json({user,product,result,err})
  })
 
 }catch(err){
@@ -260,11 +324,14 @@ console.log(session)
 }
 })
   
+
+
+
 app.get('/api/orders/:id',async(req,res)=>{
   const orderId = req.params.id
-  console.log(orderId)
+  console.log(orderId+"FROMMMMMM API ODER ID")
   try{
-    connection.query('SELECT * FROM orders WHERE order_id = ?',orderId,(err,result)=>{
+    connection.query('SELECT * FROM orders_info WHERE order_id = ?',orderId,(err,result)=>{
       const results = result[0]
       res.json({order:results});
     });
@@ -276,50 +343,22 @@ app.get('/api/orders/:id',async(req,res)=>{
 
 
 
-
-
-
-app.post('/webhook', express.raw({type: 'application/json'}), async (req, res) => {
-  const sig = req.headers['stripe-signature']
-
-  let event
-
-  try {
-    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret)
-  } catch (err) {
-    console.log("Webhook Error",err)
-    res.status(400).send(`Webhook Error: ${err.message}`)
-    return
-  }
-
-  // Handle the event
-  switch (event.type) {
-    case 'checkout.session.completed':
-      const paymentSuccessData = event.data.object
-      const sessionId = paymentSuccessData.id
-      console.log(paymentSuccessData,sessionId)
-      const data = {
-        status: paymentSuccessData.status
-      }
-
-      const result = await connection.query(
-        'UPDATE orders SET ? WHERE session_id = ?',
-        [data, sessionId]
-      )
-
-      console.log('=== update result', result)
-
-      // event.data.object.id = session.id
-      // event.data.object.customer_details คือข้อมูลลูกค้า
-      break
-    default:
-      console.log(`Unhandled event type ${event.type}`)
-  }
-
-  // Return a 200 response to acknowledge receipt of the event
-  res.send()
+//GOT EMAIL
+app.get("/getemail",verifyUser,(req,res)=>{
+  const userID = req.UserID;
+  connection.query("SELECT email FROM customer WHERE id = ?",[userID],(err,result)=>{
+    if(err) throw err;
+    const Useremail =result[0].email
+    return res.json({Useremail})
+  })
 })
-app.use(express.json())
+
+
+
+
+
+
+
 
 
 
