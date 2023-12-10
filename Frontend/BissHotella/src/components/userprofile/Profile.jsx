@@ -16,6 +16,10 @@ const [phone,setphone] = useState('')
 const [email,setemail] = useState('Example')
 
 useEffect(() => {
+
+
+
+
     // Make the API call when the component mounts
     axios.get('http://localhost:8080/getuserdata')
       .then((res) => {
@@ -59,25 +63,13 @@ useEffect(() => {
       })
  }
 
-
-
-
- 
-
-
-
-
-
-
-
-
+ //Return
   return (
     <>
 <Navbar/>
 <div className="ProfileFrame">
     <div className="Profilebox">
         
-
         <div className="backgroundPhoto">
             <div className="userpicture"></div>
         </div>

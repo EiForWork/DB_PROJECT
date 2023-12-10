@@ -10,6 +10,8 @@ import master from '../booking/img/mas.png'
 import truee from './img/true.png'
 import {createBrowserRouter,RouterProvider,Route,Link} from 'react-router-dom'
 import Navbar from '../navbar/Navbar';
+import creditcard from '../booking/img/creditcard.png' 
+import axios from 'axios';
 
 
 function Booking() {
@@ -25,11 +27,73 @@ function Booking() {
 
   const[AllPrice,setPrice] = useState(0)
 
+  const [CheckIn,setCheckin] = useState('')
+  const [CheckOut,setCheckout] = useState('')
+  const [getemail,setemail] = useState('')
+
+  //Take Email
+  useEffect(() => {
+    // Make the API call when the component mounts
+    axios.get('http://localhost:8080/getemail')
+      .then((res) => {
+        const { Useremail } = res.data; // Assuming res.data contains the response data
+        setemail(Useremail);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
+console.log(getemail)
+
+// const coverter = String(PoAmo,LuxuryAmo,DeAmo)
+let details = `Poolvilla x${PoAmo} Luxury x${LuxuryAmo} Deluxe x${DeAmo}`
+// let details = "Poolvilla,LuxuryDeluxe"+coverter
+let Amount = Number(PoAmo) + Number(LuxuryAmo) + Number(DeAmo);
+
+
+
+const getData = (e) => {
+  e.preventDefault();
+
+  if(AllPrice == 0){
+    return alert("Choose your room")
+  }
+
+  console.log(Amount,AllPrice)
+  const BookingData = {
+    "user":{
+      "email":getemail,
+      "checkin":CheckIn,
+      "checkout":CheckOut,
+      "detail":details,
+      "total":AllPrice,
+    },
+    "product":{
+      "name":"BissHotella Check Bill",
+      "price":AllPrice,
+      "quantity":Amount
+    }
+
+  };
+
+  console.log(BookingData);
+
+  axios.post('http://localhost:8080/api/checkout', BookingData)
+    .then((res) => {
+      console.log(res.data); // Log the response data
+    })
+    .catch((err) => {
+      console.log(err, "Failed something");
+    });
+};
 
 
 
 
-  let roomtypes = ["Party Room","Deluxe Room","Luxury Room"]
+
+
+  let roomtypes = [`Party Room ${PoAmo}`,"Deluxe Room","Luxury Room"]
 
 
   const PoolvilaFunc = (e) => {
@@ -77,9 +141,9 @@ function Booking() {
     <div className="checkVisbox">
       <h1 className="booking-title">Booking And Check Here</h1>
       <form className="bookingCheck">Check In
-        <input type="date" id="CheckIn" placeholder="CheckIn" />Check Out 
-        <input type="date" id="CheckOut" placeholder="CheckOut" />
-        <button>Check Availability</button>
+        <input type="date" id="CheckIn" value={CheckIn} onChange={(e) => setCheckin(e.target.value)} />Check Out 
+        <input type="date" id="CheckOut" value={CheckOut} onChange={(e) => setCheckout(e.target.value)} />
+        <input value={"Check Availability"} className='bt' />
       </form>
     </div>
 
@@ -104,13 +168,13 @@ function Booking() {
               <img src={pool} alt="Poolvila" />
               <div className="room-details">
                 <h1>Poolvila</h1>
-                <small>Price: $5000</small><br />
+                <small>Price: ฿5000</small><br />
                 <a href="#">Remove</a>
               </div>
             </div>
           </td>
           <td><input type="number" value={PoAmo} min={0} max={10} onChange={(e)=>setPo(e.target.value)}  onKeyDown={PoolvilaFunc} /></td>
-          <td>${PoPrice*PoAmo}</td>
+          <td>฿{PoPrice*PoAmo}</td>
         </tr>
 
         <hr/>
@@ -122,13 +186,13 @@ function Booking() {
               <img src={deluxe} alt="Deluxe" />
               <div className="room-details">
                 <h1>Deluxe</h1>
-                <small>Price: $500</small><br />
+                <small>Price: ฿500</small><br />
                 <a href="#">Remove</a>
               </div>
             </div>
           </td>
           <td><input type="number" value={DeAmo} min={0} max={10} onChange={(e)=>setDe(e.target.value)}  onKeyDown={PoolvilaFunc} /></td>
-          <td>${DeluxePrice*DeAmo}</td>
+          <td>฿{DeluxePrice*DeAmo}</td>
         </tr>
 
         <hr/>
@@ -139,13 +203,13 @@ function Booking() {
               <img src={luxury} alt="Luxury" />
               <div className="room-details">
                 <h1>Luxury</h1>
-                <small>Price: $50000</small><br />
+                <small>Price: ฿50000</small><br />
                 <a href="#">Remove</a>
               </div>
             </div>
           </td>
           <td><input type="number" value={LuxuryAmo} min={0} max={10} onChange={(e)=>setLu(e.target.value)}  onKeyDown={LuxuryFunc} /></td>
-          <td>${LuxPrice*LuxuryAmo}</td>
+          <td>฿{LuxPrice*LuxuryAmo}</td>
         </tr>
 
         <hr/>
@@ -157,41 +221,47 @@ function Booking() {
       {/* payment */}
 
       <form className="payment">
-        <h1>Payment</h1>
 
-        <div className="paymethod">
-            <span>Pay Method</span>
+      <h1 style={{fontSize:"40px"}}>Payment</h1>
 
-          <div className="payselect">
-            <div className="paybox">
-              <img src={master}/>
-            </div>
-            
-            <div className="paybox">
-              <img src={paypal}/>
-            </div>
+<div className="paymethod">
+  <div className="paytopic">
+    <span>Pay Method We Permitted ✓</span>
+  </div>
+    
 
-            <div className="paybox">
-              <img src={truee}/>
-            </div>
+  <div className="payselect">
+    <div className="paybox">
+      <img src={master}/>
+    </div>
+    
+    <div className="paybox">
+      <img src={paypal}/>
+    </div>
 
-            <div className="paybox">
-              <p>See all</p>
-            </div>
-          </div>
+    <div className="paybox">
+      <img src={truee}/>
+    </div>
 
-        </div>
+    <div className="paybox">
+      <p>See all</p>
+    </div>
+  </div>
+
+</div>
         
-        <hr/>
+        <div className="creditcard">
+          <img src={creditcard}/>
+        </div>
 
         <div className="totalPrice">
             <div className="toPrice">
-              <p>Total</p>
-              <p>${AllPrice}</p>
+              <p style={{fontSize:"30px"}}>Total</p>
+              <p style={{fontSize:"30px"}}>฿{AllPrice}</p>
             </div>
         </div>
 
-        <input type="submit"value={"Pay"} className='Paybt'/>
+        <input type="submit"value={"Pay"} className='Paybt' onClick={getData}/>
 
 
       </form>

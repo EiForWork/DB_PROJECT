@@ -355,13 +355,6 @@ app.get("/getemail",verifyUser,(req,res)=>{
 
 
 
-
-
-
-
-
-
-
 app.use(router)
 
 app.listen(8080,()=>{
