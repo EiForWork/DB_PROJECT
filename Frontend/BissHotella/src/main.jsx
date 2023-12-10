@@ -8,6 +8,7 @@ import Register from './components/register/Register.jsx'
 import Room from './components/roomtypes/Room.jsx'
 import Profile from './components/userprofile/Profile.jsx'
 
+
 const router = createBrowserRouter([
   {
     path: "/",

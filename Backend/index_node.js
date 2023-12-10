@@ -10,10 +10,15 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const { decode } = require('punycode');
 const {v4:uuidv4 } = require('uuid')
-
+const env = require('dotenv');
 const Stripe = require('stripe');
 const stripe = Stripe('sk_test_51OLLwFH1Rn2e5SsUrhRWBAymo6rPWDTlMxelVcKZNarsan1iorMrUHcjY6y8yglJjTJFPFj4uX2bKfrAI4OrC42q00AYIFyWAg');
 const endpointSecret = "whsec_83e9f3fd09a0cf17e6b2b8e305b5d34263a707849f548e80a6f0cfac0882f6ac";
+
+require('dotenv').config()
+
+
+// require('dotenv').config()
 
 
 //Middleware // Session Setting
@@ -24,7 +29,7 @@ app.use(session({
 }))
 
 // app.use(bodyParser.json());
-app.use(express.json())
+
 app.use(cookieParser())
 app.use(cors(
     {
@@ -230,8 +235,8 @@ try{
       },
     ],
     mode: 'payment',
-    success_url : `http://localhost:8885/success.html?id=${orderID}`,
-    cancel_url : `http://localhost:8885/fail.html?id=${orderID}`
+    success_url : `http://localhost:8081/success.html?id=${orderID}`,
+    cancel_url : `http://localhost:8081/fail.html?id=${orderID}`
   });
 
 //Store in database
@@ -274,49 +279,47 @@ app.get('/api/orders/:id',async(req,res)=>{
 
 
 
-//WEBHOOK
-app.post('/webhook', express.raw({type: 'application/json'}),async (req,res) => {
-  const sig = req.headers['stripe-signature'];
+app.post('/webhook', express.raw({type: 'application/json'}), async (req, res) => {
+  const sig = req.headers['stripe-signature']
 
-  let event;
+  let event
 
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret)
   } catch (err) {
-    res.status(400).send(`Webhook Error: ${err.message}`);
-    return;
+    console.log("Webhook Error",err)
+    res.status(400).send(`Webhook Error: ${err.message}`)
+    return
   }
 
   // Handle the event
   switch (event.type) {
     case 'checkout.session.completed':
-      const paymentData = event.data.object
-      console.log("paymentData",paymentData)
-      const sessionId = paymentData.id
+      const paymentSuccessData = event.data.object
+      const sessionId = paymentSuccessData.id
+      console.log(paymentSuccessData,sessionId)
       const data = {
-        status : paymentData.status
+        status: paymentSuccessData.status
       }
 
-      //Find order from sessionID
-      const [result] = await connection.query('UPDATE oders SET ? WHERE session_id = ?'
-      ,[data,sessionId]
+      const result = await connection.query(
+        'UPDATE orders SET ? WHERE session_id = ?',
+        [data, sessionId]
       )
 
-      console.log('updatee',result)
-      
+      console.log('=== update result', result)
 
-
-      break;
-    // ... handle other event types
+      // event.data.object.id = session.id
+      // event.data.object.customer_details คือข้อมูลลูกค้า
+      break
     default:
-      console.log(`Unhandled event type ${event.type}`);
+      console.log(`Unhandled event type ${event.type}`)
   }
 
   // Return a 200 response to acknowledge receipt of the event
-  res.send();
-});
-
-
+  res.send()
+})
+app.use(express.json())
 
 
 
