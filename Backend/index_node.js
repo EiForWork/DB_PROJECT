@@ -129,6 +129,8 @@ const verifyUser = (req,res,next) => {
     }
 }
 
+
+
 app.get('/logout', (req, res) => {
     res.clearCookie('token', { path: '/', domain: 'localhost' });
     return res.status(200).json({ status: 200 });
@@ -352,6 +354,43 @@ app.get("/getemail",verifyUser,(req,res)=>{
     return res.json({Useremail})
   })
 })
+
+
+
+app.get("/history", verifyUser, (req, res) => {
+  const userID = req.UserID;
+
+  // First query to get user's email
+  connection.query("SELECT email FROM customer WHERE id = ?", [userID], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Extract user email from the result
+    const emailuser = result[0].email;
+
+    // Second query to get order history based on the user's email
+    connection.query(
+      "SELECT order_id, status, check_in, check_out, Details,TotalPrice FROM orders_info WHERE email = ?",
+      [emailuser],
+      (err, results) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ message: "Internal Server Error" });
+        }
+        console.log(results)
+        // Send the order history as JSON response
+        return res.json({results});
+      }
+    );
+  });
+});
+
 
 
 

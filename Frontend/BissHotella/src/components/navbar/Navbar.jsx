@@ -59,7 +59,7 @@ function Navbar() {
         <ul className="ulnav">
             <li><Link to="/">Home</Link></li>
             <li><Link to="/roomtypes">Room Types</Link></li>
-            <li><Link to="/gallery">Gallery</Link></li>
+            <li><Link to="/history">History</Link></li>
             <li><Link to="/profile">YourProfile</Link></li>
             <li><Link to="/logout" onClick={handlelogout}>Logout</Link></li>
         </ul>

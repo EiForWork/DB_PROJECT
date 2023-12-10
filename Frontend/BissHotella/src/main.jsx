@@ -7,6 +7,7 @@ import Booking from './components/booking/Booking.jsx'
 import Register from './components/register/Register.jsx'
 import Room from './components/roomtypes/Room.jsx'
 import Profile from './components/userprofile/Profile.jsx'
+import PaymentHistory from './components/payment/PaymentHistory.jsx'
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,9 @@ const router = createBrowserRouter([
   },{
     path:"/profile",
     element:<Profile/>
+  },{
+    path:"/history",
+    element:<PaymentHistory/>
   }
 ])
 
