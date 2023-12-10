@@ -13,6 +13,7 @@ const {v4:uuidv4 } = require('uuid')
 
 const Stripe = require('stripe');
 const stripe = Stripe('sk_test_51OLLwFH1Rn2e5SsUrhRWBAymo6rPWDTlMxelVcKZNarsan1iorMrUHcjY6y8yglJjTJFPFj4uX2bKfrAI4OrC42q00AYIFyWAg');
+const endpointSecret = "whsec_83e9f3fd09a0cf17e6b2b8e305b5d34263a707849f548e80a6f0cfac0882f6ac";
 
 
 //Middleware // Session Setting
@@ -208,7 +209,7 @@ app.get("/getuserdata",verifyUser, (req, res) => {
     });
   });
 
-
+//ok
 app.post("/api/checkout",express.json(),async(req,res)=>{
 try{
   const {user,product} = req.body
@@ -242,8 +243,11 @@ const orderData = {
   status: session.status,
 }
 
- const [result] = await connection.query('INSERT INTO orders SET ?',orderData)
- res.json({user,product,order:result})
+console.log(session)
+
+ await connection.query('INSERT INTO orders SET ?',orderData,(err,result)=>{
+  res.json({user,product,order:result})
+ })
 
 }catch(err){
   console.log(err,"error something")
@@ -264,6 +268,55 @@ app.get('/api/orders/:id',async(req,res)=>{
     res.status(400).json({message:"Something Wronggg"})
   }
 })
+
+
+
+
+
+
+//WEBHOOK
+app.post('/webhook', express.raw({type: 'application/json'}),async (req,res) => {
+  const sig = req.headers['stripe-signature'];
+
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+  } catch (err) {
+    res.status(400).send(`Webhook Error: ${err.message}`);
+    return;
+  }
+
+  // Handle the event
+  switch (event.type) {
+    case 'checkout.session.completed':
+      const paymentData = event.data.object
+      console.log("paymentData",paymentData)
+      const sessionId = paymentData.id
+      const data = {
+        status : paymentData.status
+      }
+
+      //Find order from sessionID
+      const [result] = await connection.query('UPDATE oders SET ? WHERE session_id = ?'
+      ,[data,sessionId]
+      )
+
+      console.log('updatee',result)
+      
+
+
+      break;
+    // ... handle other event types
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+  }
+
+  // Return a 200 response to acknowledge receipt of the event
+  res.send();
+});
+
+
 
 
 
