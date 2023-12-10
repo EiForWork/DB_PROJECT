@@ -17,22 +17,20 @@ function PaymentHistory() {
         axios.get('http://localhost:8080/history')
           .then((res) => {
             const { order_id, status, check_in, check_out, Details,TotalPrice } = res.data;
-          
-
-            // console.log(userData)
+            setstatus(status)
           })
           .catch((err) => {
             console.error(err);
           });
       },[]); 
 
+      console.log(status)
 
     return (
     <>
         <Navbar/>
             
             <div className="box">
-
         <table className="tables">
         <h2>YOUR PAYMENT HISTORY</h2>
                 <tr>
@@ -51,6 +49,7 @@ function PaymentHistory() {
                     <td>Germany</td>
                     <td>Germany</td>
                 </tr>
+              
                 <tr>
                     <td>Centro comercial Moctezuma</td>
                     <td>Francisco Chang</td>

@@ -266,19 +266,8 @@ app.post("/api/checkout",express.json(),async(req,res)=>{
 
 
   try{
-
-// //Find Email
-// const userID = req.UserID;
-// connection.query(FindEmail,[userID],(err,result)=>{
-//   if(err) return res.json({message:"Internal Server Error"})
-
-// })
-
-
   const {user,product} = req.body
-  // const {BookingData} = req.body
-  // const {users} = req.body
-  // const {User,products} = req.body
+
   const orderID = uuidv4()
   //Use API KEY SECRET KEY
   const session = await stripe.checkout.sessions.create({
@@ -296,10 +285,9 @@ app.post("/api/checkout",express.json(),async(req,res)=>{
       },
     ],
     mode: 'payment',
-    success_url : `http://localhost:8081/success.html?id=${orderID}`,
+    success_url : `http://localhost:5173/history?id=${orderID}`,
     cancel_url : `http://localhost:8081/fail.html?id=${orderID}`
   });
-
 // Store in database
 const orderData = {
   email: user.email,
@@ -312,13 +300,17 @@ const orderData = {
   TotalPrice:user.total
 }
 
-
-console.log(session,user.checkin)
+console.log(session,session.id)
+const sessionId = session.id
 
  connection.query('INSERT INTO orders_info SET ?',orderData,(err,result)=>{
   if(err){console.log(err)}
-  res.json({user,product,result,err})
+
+  res.json({user,product,result,err,sessionId})
  })
+
+ 
+
 
 }catch(err){
   console.log(err,"error something")

@@ -8,13 +8,16 @@ import Footer from '../footer/Footer'
 import paypal from '../booking/img/paypal.png'
 import master from '../booking/img/mas.png'
 import truee from './img/true.png'
-import {createBrowserRouter,RouterProvider,Route,Link} from 'react-router-dom'
+import {createBrowserRouter,RouterProvider,Route,Link, redirect} from 'react-router-dom'
 import Navbar from '../navbar/Navbar';
 import creditcard from '../booking/img/creditcard.png' 
 import axios from 'axios';
-
+import {useNavigate} from 'react-router-dom'
+import Stripe from 'stripe';
+const stripe = Stripe('pk_test_51OLLwFH1Rn2e5SsU3s8EUI0Ujz8hEpB9pO7PjlzwaWpzYs466W969AvcdPPv8qYWNYvaId7nIg14gz7ljAiVSrtB00F4O0Xb4I');
 
 function Booking() {
+  const navigate = useNavigate()
 
   const [PoAmo,setPo] = useState(0)
   const [PoPrice,setPoP] = useState(5000)
@@ -80,12 +83,19 @@ const getData = (e) => {
   console.log(BookingData);
 
   axios.post('http://localhost:8080/api/checkout', BookingData)
-    .then((res) => {
-      console.log(res.data); // Log the response data
-    })
-    .catch((err) => {
-      console.log(err, "Failed something");
-    });
+  .then((res) => {
+   console.log(res.data)
+   const sessionId = res.data.sessionId
+   stripe.redirectToCheckout({sessionId:sessionId})
+  console.log(sessionId)
+  })
+  .catch((err) => {
+    console.error(err, "Failed something");
+  });
+
+
+
+
 };
 
 
@@ -137,6 +147,7 @@ const getData = (e) => {
 
   return (
   <>
+  
   <Navbar/>
     <div className="checkVisbox">
       <h1 className="booking-title">Booking And Check Here</h1>
