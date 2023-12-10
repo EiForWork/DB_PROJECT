@@ -1,0 +1,114 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.ProfileFrame {
+    width: 100%;
+    height: 900px;
+    background-image: linear-gradient(
+        rgba(0, 0, 0, 0.548),
+        rgba(228, 228, 228, 0.089)
+      ),
+      url('./bob.png');
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.Profilebox {
+    width: 60%; /* Adjust the percentage based on your design */
+    max-width: 80%; /* Set a max-width if needed */
+    height: 80%;
+    background-color: rgb(27, 27, 27);
+    box-shadow: 0px 0px 10px rgb(255, 255, 255);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.backgroundPhoto {
+    width: 100%;
+    height: 140px;
+    background: linear-gradient(45deg, rgb(230, 130, 0), rgb(255, 93, 93));
+    /* background-color: rgb(255, 136, 0); */
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.userpicture {
+    height: 180px;
+    width: 180px;
+    border-radius: 50%;
+    margin-top: 40px;
+    background-image: url('./pic.png');
+    background-position: center;
+    background-size: cover; /* Use 'cover' to make sure the background image covers the entire container */
+    border: 7px solid rgb(255, 255, 255); /* Simplify border property */
+    box-sizing: border-box; /* Include border in the element's total width and height */
+}
+
+
+.Updateform{
+    /* background-color: rgb(250, 107, 185); */
+    width: 80%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formbox1{
+width: 100%;
+height: 70%;
+display:flex;
+flex-direction:column;
+justify-content: center;
+align-items: center;
+}
+
+.formgroup{
+    margin-top: 40px;
+}
+
+.formbox1 input{
+    margin-top: 10px;
+    width: 200px;
+    height: 30px;
+    border-width:0 ;
+    background: transparent;
+    border-bottom:3px solid #fff;
+    color: #fff;
+    font-size: 15px;
+}
+.formbox1 label{
+    font-size: 20px;
+    color:white;
+}
+
+.updateform{
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    border-width: 0;
+    box-shadow: 0px 0px 10px rgb(0, 0, 0);
+    background-color: rgb(141, 141, 141);
+    font-size: 20px;
+    color: white;
+    transition: 0.5s;
+    font-weight:bold;
+    margin-bottom: 30px;
+}
+
+.updateform:hover{
+    box-shadow: 0px 0px 10px rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
+    transition: 0.5s;
+}
+
+

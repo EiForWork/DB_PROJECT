@@ -8,8 +8,11 @@ const bcrypt = require('bcrypt')
 const mysql = require('mysql')
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
-const { verify } = require('crypto');
 const { decode } = require('punycode');
+const {v4:uuidv4 } = require('uuid')
+
+const Stripe = require('stripe');
+const stripe = Stripe('sk_test_51OLLwFH1Rn2e5SsUrhRWBAymo6rPWDTlMxelVcKZNarsan1iorMrUHcjY6y8yglJjTJFPFj4uX2bKfrAI4OrC42q00AYIFyWAg');
 
 
 //Middleware // Session Setting
@@ -19,8 +22,9 @@ app.use(session({
     saveUninitialized:false
 }))
 
-
+// app.use(bodyParser.json());
 app.use(express.json())
+app.use(cookieParser())
 app.use(cors(
     {
         origin:["http://localhost:5173"], //อนูญาตให้แค่localhostตัวนี้ยิงมาได้
@@ -31,7 +35,7 @@ app.use(cors(
 )) // For CrossDomain
 
 app.use(express.static(path.join(__dirname,'public')))
-app.use(cookieParser())
+
 
 
 // MySQL CONNECTION
@@ -52,9 +56,10 @@ connection.connect((err)=>{
 })
 
 
-
+//next is a middleware if we will call
 const verifyUser = (req,res,next) => {
-    const token = req.cookie.token;
+    const token = req.cookies.token;
+    req.UserID = decode.UserID;
     if(!token){
         return res.json({message:"We need token"})
     }else{
@@ -62,22 +67,30 @@ const verifyUser = (req,res,next) => {
             if(err){
                 return res.json({message:"Auten error"})
             }else{
-                req.id = decode.name;
+                req.UserID = decode.UserID;
+                console.log("We get the token"+req.UserID)
                 next();
             }
         })
     }
 }
 
-app.get("/",verifyUser,(req,res)=>{
-    return res.json({Status:"Success",id:req.id})
-})
+app.get('/logout', (req, res) => {
+    res.clearCookie('token', { path: '/', domain: 'localhost' });
+    return res.status(200).json({ status: 200 });
+});
+
+
+app.get('/', verifyUser, (req, res) => {
+    return res.status(200).json({ status: "bobby", UserID: req.UserID });
+});
+
 
 
 
 //REGISTER ZONE
-const insertData = "INSERT INTO customer(fullname,lastname,phone,sex,country,birthday,email,password) VALUES (?,?,?,?,?,?,?,?)";
-const CheckEmail = "SELECT email FROM customer WHERE email = ?";
+const insertData = "INSERT INTO customer(fname,lastname,phone,sex,country,birthday,email,password) VALUES (?,?,?,?,?,?,?,?)";
+
 
 app.post("/register", async (req, res) => {
     const { Name, Surname, phone, sex, country, birthday, email, password } = req.body;
@@ -103,79 +116,154 @@ app.post("/register", async (req, res) => {
 
 
 // LOGIN ZONE
-let FindUser = "SELECT email, password FROM customer WHERE email = ? AND password = ?";
+let FindUser = "SELECT email, password FROM customer WHERE email = ?";
 let FindID  = "SELECT id FROM customer WHERE email = ?"
 app.post("/login", async (req, res) => {
-  const { takeEmail, takePassword } = req.body;
-  const timeExpire = 30000
-  connection.query(FindUser, [takeEmail, takePassword], (err, result) => {
-    // Checking Error
-    if (err) {
-      console.error("Error during login:", err);
-      return res.status(500).json({ message: "Internal Server Error" });
-    }
-    // Check if the user is found and the password matches
-    try{
-        const checkUser = result.find(result => result.email === takeEmail && result.password === takePassword)
-      if (checkUser) {
-        connection.query(FindID,[takeEmail],(err,result)=>{ 
-            if(err){ return res.status(401).json({message:"Cant pull ID"}) }
-            
-            // Access the id property of the first result
-            const userId = result[0].id;
-            const token = jwt.sign({userId},"our-jsonwebtoken-secret-key",{expiresIn:'1d'})
-            res.cookie('token',token)
-        return res.status(200).json({ message: "Login successful",status:"Success"});
-        })
-      } else {
-        return res.status(401).json({ message: "Invalid email or password" });
+    const { takeEmail, takePassword } = req.body;
+    
+    connection.query(FindUser, [takeEmail], async (err, result) => {
+      // Checking Error
+      if (err) {
+        console.error("Error during login:", err);
+        return res.status(500).json({ message: "Internal Server Error" });
       }
-    }
-    catch(err){
-        return res.json({message:"Query Data is have problem"})
-    }
   
+      try {
+        if (result.length > 0) {
+          const hashedPassword = result[0].password;
+  
+          // Use bcrypt.compare() to compare the passwords
+          const passwordMatch = await bcrypt.compare(takePassword, hashedPassword);
+  
+          if (passwordMatch) {
+            connection.query(FindID, [takeEmail], (err, result) => {
+
+              if (err) {
+                return res.status(401).json({ message: "Can't pull ID" });
+              }
+                const UserID = result[0].id;
+                const token = jwt.sign({UserID},
+              "our-jsonwebtoken-secret-key",{expiresIn: "1d"});
+              console.log(UserID,token,result)
+              res.cookie('token',token);
+
+
+              return res.status(200).json({ message: "Login successful", status: "Success" });
+              //SUCCESS
+            
+
+            });
+          } else {
+            return res.status(401).json({ message: "Invalid email or password" });
+          }
+        } else {
+          return res.status(401).json({ message: "Email not found" });
+        }
+      } catch (err) {
+        return res.json({ message: "Query Data has a problem" });
+      }
+    });
   });
-})
-// try{
-//     const { email, password } = req.body;
-//     const [results] = await connection.query(FindUser,[email])
-//     const userdata = results[0]
-//     const match = bcrypt.compare(password,userdata.password)
-//     if(!match){ 
-//         res.status(400).json({message:"login fail"})
-//         return ;
-//     }
-//     res.json({message:"login success"})
 
-// }catch(err){
-//     res.json({message:"Error"})
-// }
-
-
-
-
-// connection.query(FindUser,[email,password],(err,results)=>{
+const getUserData = "   SELECT fname,lastname,phone,email FROM customer WHERE id = ? "
+// Get user data route
+app.get("/getuserdata",verifyUser, (req, res) => {
+  const userID = req.UserID;
+  console.log(userID + " Value in cookie from middleware");
+    connection.query(getUserData, [userID], (err, result) => {
+      if (err) {
+        return res.json({ message: "Internal Server Error" });
+      }
   
-//     if(err){return res.json({message:"Server Side Error"})}
+      if (result.length === 0) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      const userData = {
+        fname: result[0].fname,
+        lastname: result[0].lastname,
+        phone: result[0].phone,
+        email: result[0].email,
+      };
+      console.log(userData)
+      return res.status(200).json(userData);
+    });
+  });
+  
 
-//     if(results.length > 0 ){
-//         const id = results[0].id
-//         const token = jwt.sign({id},"our-hee-scret",{expiresIn:'1d'})
-//         res.cookie('token',token);
-//         return res.json({status:"Success"})
-//     }else{
-//         return res.json({message:"No records Exits"})
-//     }
-//   })
+  const updateInfomation = "UPDATE customer SET fname = ?, lastname = ?, phone = ? WHERE id = ?";
+
+  // PROFILE CONFIGURATION
+  app.post("/updateprofile", verifyUser, (req, res) => {
+    const { name, last, phone } = req.body;
+    console.log(req.body)
+    const userID = req.UserID;
+  
+    //แนะนำว่าควรชื่อเดียวกันกับที่ส่งมา หรือในดาต้าเบส
+    connection.query(updateInfomation, [name, last, phone, userID], (err, result) => { 
+      if (err) {
+        return res.json({ message: "UPDATE ERROR" });
+      }
+  
+      return res.json({ message: "Profile updated successfully",status:200 });
+    });
+  });
 
 
+app.post("/api/checkout",express.json(),async(req,res)=>{
+try{
+  const {user,product} = req.body
+  const orderID = uuidv4()
+  //Use API KEY SECRET KEY
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ['card'],
+    line_items: [
+      {
+        price_data: {
+          currency: 'thb',
+          product_data: {
+            name: product.name,
+          },
+          unit_amount: product.price * 100,
+        },
+        quantity: product.quantity,
+      },
+    ],
+    mode: 'payment',
+    success_url : `http://localhost:8885/success.html?id=${orderID}`,
+    cancel_url : `http://localhost:8885/fail.html?id=${orderID}`
+  });
 
+//Store in database
+const orderData = {
+  fname: user.name,
+  lname: user.lname,
+  order_id: orderID,
+  session_id: session.id,
+  status: session.status,
+}
 
+ const [result] = await connection.query('INSERT INTO orders SET ?',orderData)
+ res.json({user,product,order:result})
 
-
-
-
+}catch(err){
+  console.log(err,"error something")
+  res.status(400).json({message:"Something Wrong"})
+}
+})
+  
+app.get('/api/orders/:id',async(req,res)=>{
+  const orderId = req.params.id
+  console.log(orderId)
+  try{
+    connection.query('SELECT * FROM orders WHERE order_id = ?',orderId,(err,result)=>{
+      const results = result[0]
+      res.json({order:results});
+    });
+  }catch(err){
+    console.log(err)
+    res.status(400).json({message:"Something Wronggg"})
+  }
+})
 
 
 

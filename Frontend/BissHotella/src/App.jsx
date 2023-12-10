@@ -3,8 +3,8 @@ import {createBrowserRouter,RouterProvider,Route,Link} from 'react-router-dom'
 
 
 // import Components
-import Navbar from './components/navbar/navbar'
-import Footer from './components/footer/footer'
+import Navbar from './components/navbar/Navbar'
+import Footer from './components/footer/Footer'
 import Home from './components/home/home'
 
 

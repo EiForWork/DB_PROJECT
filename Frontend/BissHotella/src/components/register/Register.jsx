@@ -36,16 +36,23 @@ const handleSubmit = (e) =>{
     cpassword
   } 
 
+
   for (const key in data) {
     if (data[key] === "" || data[key] === null) {
       return alert(`Please fill in all fields : ${key}`);
     }
   }
 
+  if(password.length < 8){
+    return alert("At least more than 7")
+  }
+
   //Comfirm Password
   if(password != cpassword){
     return alert("Password incorrect")
   }
+
+
 
     // Convert the birthday string to a Date object
     const birthDate = new Date(birthday);

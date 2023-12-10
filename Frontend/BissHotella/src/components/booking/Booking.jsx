@@ -9,6 +9,7 @@ import paypal from '../booking/img/paypal.png'
 import master from '../booking/img/mas.png'
 import truee from './img/true.png'
 import {createBrowserRouter,RouterProvider,Route,Link} from 'react-router-dom'
+import Navbar from '../navbar/Navbar';
 
 
 function Booking() {
@@ -72,6 +73,7 @@ function Booking() {
 
   return (
   <>
+  <Navbar/>
     <div className="checkVisbox">
       <h1 className="booking-title">Booking And Check Here</h1>
       <form className="bookingCheck">Check In

@@ -6,6 +6,8 @@ import Login from './components/login/Login.jsx'
 import Booking from './components/booking/Booking.jsx'
 import Register from './components/register/Register.jsx'
 import Room from './components/roomtypes/Room.jsx'
+import Profile from './components/userprofile/Profile.jsx'
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -30,6 +32,13 @@ const router = createBrowserRouter([
   {
     path:"/booking",
     element:<Booking/>
+  },
+  {
+    path:"/logout",
+    element:<App/>
+  },{
+    path:"/profile",
+    element:<Profile/>
   }
 ])
 

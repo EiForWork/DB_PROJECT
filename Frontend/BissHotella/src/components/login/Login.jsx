@@ -49,11 +49,9 @@ function Login() {
         alert("Welcome to the Hotel")
         navigate('/')
       }else{
-
+        alert("Please check your email or password")
       }
       console.log(loginInfo,"User Login")
-
-  
     })
     .catch((err)=>{
       console.log("Error to sent check",err)
