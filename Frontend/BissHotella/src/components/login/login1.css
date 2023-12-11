@@ -25,6 +25,8 @@ body{
   border-radius: 10px;
     background-color: rgb(255, 255, 255);
     width: 650px;
+    background: transparent;
+    backdrop-filter: blur(80px);
     height: 700px;
     display: flex;
     flex-direction: column; /* ให้องค์ประกอบอยู่ในคอลัมน์แนวตั้ง */
@@ -33,6 +35,8 @@ body{
     margin: 200px;
     box-shadow: 0px 0px 10px rgb(255, 255, 255);
   }
+
+
   
   .forgotpassword{
     display: flex;
@@ -55,7 +59,13 @@ body{
     border-radius: 10px;
     box-shadow: 2px 0px 10px rgb(180, 180, 180);
     border:0px;
+   
+    background: none;
+    border-bottom:2px solid #fff;
+
   }
+
+ 
 
   .buttonLog {
     box-shadow: 0px 0px 6px rgb(126, 128, 255);
@@ -64,9 +74,10 @@ body{
     height: 60px;
     border-radius: 10px;
     cursor: pointer;
-    background:linear-gradient(to right,rgb(100, 103, 255),rgb(186, 55, 247)); /* สีพื้นหลังปกติ */
+    background:linear-gradient(to right,rgb(54, 57, 255),rgb(113, 55, 247)); /* สีพื้นหลังปกติ */
     color: #fff; /* สีข้อความปกติ */
-    
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .buttonLog:hover{

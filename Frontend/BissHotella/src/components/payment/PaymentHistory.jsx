@@ -7,88 +7,61 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 
+// ... (imports)
+
 function PaymentHistory() {
-
     const [userData, setUserData] = useState('');
-    const [status,setstatus] = useState('')
-
+    const [orders, setOrders] = useState([]); // Use an array for multiple orders
+  
     useEffect(() => {
-        // Make the API call when the component mounts
-        axios.get('http://localhost:8080/history')
-          .then((res) => {
-            const { order_id, status, check_in, check_out, Details,TotalPrice } = res.data;
-            setstatus(status)
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      },[]); 
-
-      console.log(status)
-
+      // Make the API call when the component mounts
+      axios.get('http://localhost:8080/history')
+        .then((res) => {
+          const fetchedOrders = res.data.results;
+          console.log(fetchedOrders);
+          if (fetchedOrders && fetchedOrders.length > 0) {
+            setOrders(fetchedOrders); // Set the array of orders in the state
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }, []); 
+  
     return (
-    <>
+      <>
         <Navbar/>
-            
-            <div className="box">
-        <table className="tables">
-        <h2>YOUR PAYMENT HISTORY</h2>
-                <tr>
-                    <th>OrderID</th>
-                    <th>Status</th>
-                    <th>CheckIn</th>
-                    <th>CheckOut</th>
-                    <th>Details</th>
-                    <th>TotalPrice</th>
+        <div>
+          <h2>Order History</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Status</th>
+                <th>Check In</th>
+                <th>Check Out</th>
+                <th>Details</th>
+                <th>Total Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((order) => (
+                <tr key={order.order_id}>
+                  <td>{order.order_id}</td>
+                  <td>{order.status}</td>
+                  <td>{order.check_in}</td>
+                  <td>{order.check_out}</td>
+                  <td>{order.Details}</td>
+                  <td>{order.TotalPrice}</td>
                 </tr>
-                <tr  key={userData.order_id}>
-                    <td>{}s</td>
-                    <td></td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                </tr>
-              
-                <tr>
-                    <td>Centro comercial Moctezuma</td>
-                    <td>Francisco Chang</td>
-                    <td>Mexico</td>
-                </tr>
-                <tr>
-                    <td>Ernst Handel</td>
-                    <td>Roland Mendel</td>
-                    <td>Austria</td>
-                </tr>
-                <tr>
-                    <td>Island Trading</td>
-                    <td>Helen Bennett</td>
-                    <td>UK</td>
-                </tr>
-                <tr>
-                    <td>Laughing Bacchus Winecellars</td>
-                    <td>Yoshi Tannamuri</td>
-                    <td>Canada</td>
-                </tr>
-                <tr>
-                    <td>Magazzini Alimentari Riuniti</td>
-                    <td>Giovanni Rovelli</td>
-                    <td>Italy</td>
-                </tr>
-                
-
-                
-        </table>
-
-            </div>
-
-
-
-
+              ))}
+            </tbody>
+          </table>
+        </div>
         <Footer/>
-    </>
+      </>
     )
-}
-
-
-export default PaymentHistory
+  }
+  
+  export default PaymentHistory;
+  

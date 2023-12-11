@@ -339,7 +339,7 @@ app.get("/getemail",verifyUser,(req,res)=>{
 
 app.get("/history", verifyUser, (req, res) => {
   const userID = req.UserID;
-
+  console.log(userID)
   // First query to get user's email
   connection.query("SELECT email FROM customer WHERE id = ?", [userID], (err, result) => {
     if (err) {
@@ -353,7 +353,7 @@ app.get("/history", verifyUser, (req, res) => {
 
     // Extract user email from the result
     const emailuser = result[0].email;
-
+    console.log(emailuser)
     // Second query to get order history based on the user's email
     connection.query(
       "SELECT order_id, status, check_in, check_out, Details,TotalPrice FROM orders_info WHERE email = ?",

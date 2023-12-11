@@ -66,22 +66,22 @@ function Login() {
     <div className="bgmain">
       <div className="mainbox">
         <form className="form" action="/login" method="POST">
-          <h2>Login</h2>
+          <h2 style={{fontSize:"40px",color:"white"}}>Login</h2>
           
           <input className="Email" type="email" placeholder="Email"  onChange={(e)=>{setEmail(e.target.value)}} /><br />
           <input className="Password" type="password" placeholder="Password"  onChange={(e)=>{setPas(e.target.value)}}  /><br />
           
           <div className="forgotpassword">
-            <Link to="/register">Create Account</Link>
-            <Link to="/">Forgot password?</Link>
+            <Link to="/register"  style={{textDecoration:"none",color:"white",fontSize:"17px"}}>Create Account</Link>
+            <Link to="/"style={{textDecoration:"none",color:"white",fontSize:"17px"}}>Forgot password?</Link>
           </div><br/>
           
           <input type="submit" className="buttonLog" value={"Login"}onClick={submitForm}/>
           
           <div className="orlogin">
-            <hr style={{ width: '200px', height: '1px', backgroundColor: 'rgb(194, 194, 194)' }} />
-            <p>or login with</p>
-            <hr style={{ width: '200px', height: '1px', backgroundColor: 'rgb(194, 194, 194)' }} />
+            <hr style={{ width: '200px', height: '3px', backgroundColor: 'white',border:"0px" }} />
+            <p style={{color:"white",fontSize:"20px"}}>or login with</p>
+            <hr style={{ width: '200px', height: '3px', backgroundColor: 'white',border:"0px" }} />
           </div>
           
           <div className="contact">
