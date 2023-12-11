@@ -10,6 +10,7 @@ import Profile from './components/userprofile/Profile.jsx'
 import PaymentHistory from './components/payment/PaymentHistory.jsx'
 import Success from './components/success.jsx'
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -48,7 +49,8 @@ const router = createBrowserRouter([
   {
     path:"/success",
     element:<Success/>
-  }
+ },
+ ,
 ])
 
 

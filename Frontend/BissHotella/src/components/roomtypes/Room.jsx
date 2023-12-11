@@ -31,38 +31,34 @@ function Room() {
         </div>
       </div>
 
+      {/* ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss */}
+
       <div className="partyroompic">
-        <div className="partytopic">Party Room</div>
+        <div className="partytopic2">
+           <p>Poovilla Room</p>
+        </div>
       </div>
 
       <div className="partydetail">
-        <div className="topicpar">Detail</div>
-        <div className="detailallpar">
+  
+      <div className="detailallpar">  
           <div className="pardetail">
             <h1>Room Detail</h1>
             <ul>
-              <li>Price / Night: 200,000 THB</li>
+              <li>Price / Night: 5,000 THB</li>
               <li>Capacity: 10</li>
               <li>5 BedRoom</li>
-              <li>3 BathRoom</li>
+              <li>10 BathRoom</li>
             </ul>
           </div>
 
-          <div className="paruse">
-            <h1>Service Usage</h1>
-            <ul>
-              <li>Soap</li>
-              <li>Towel</li>
-              <li>Hair dryer</li>
-            </ul>
-          </div>
 
           <div className="parroomservice">
             <h1>Service</h1>
             <ul>
-              <li>Luxury meal set</li>
-              <li>Slider</li>
-              <li>Light for Night Party</li>
+              <li>BBQ Tools</li>
+              <li>Dryers</li>
+              <li>Kitchen</li>
             </ul>
           </div>
 
@@ -70,55 +66,72 @@ function Room() {
             <h1>Facilities</h1>
             <ul>
               <li>Fitness</li>
-              <li>Meal</li>
-              <li>Swimming</li>
-              <li>Private Kitchen</li>
+              <li>Slider</li>
+              <li>Private view</li>
+              <li>Private Big Pool</li>
             </ul>
           </div>
 
           <div className="parpark">
             <h1>Parking</h1>
             <ul>
-              <li>Car Capacity: 5</li>
-              <li>Bigbike Capacity: 7</li>
+              <li>Motocycle</li>
+              <li>Supercar Care</li>
+              <li>Capacity : 10</li>
             </ul>
           </div>
+
+          
         </div>
       </div>
 
       {/* ------------------------------------------------------------------------------------------------------------ */}
 
       <div className="partyroompic2">
-        <div className="partytopic2">Deluxe Room</div>
+        <div className="partytopic2">
+           <p>Deluxe Room</p>
+        </div>
       </div>
 
       <div className="partydetail">
-        <div className="topicpar">Detail</div>
-        <div className="detailallpar">
+      <div className="detailallpar">  
           <div className="pardetail">
             <h1>Room Detail</h1>
             <ul>
-              <li>Price / Night: 100,000 THB</li>
+              <li>Price / Night: 500 THB</li>
               <li>Capacity: 2</li>
               <li>1 BedRoom</li>
               <li>1 BathRoom</li>
             </ul>
           </div>
 
-          <div className="paruse">
-            <h1>Service Usage</h1>
-          </div>
 
           <div className="parroomservice">
             <h1>Service</h1>
+            <ul>
+              <li>Ramp</li>
+              <li>Dryer</li>
+              <li>Microwave</li>
+            </ul>
           </div>
 
           <div className="parfaci">
             <h1>Facilities</h1>
+            <ul>
+              <li>Fitness</li>
+              <li>Private view</li>
+              <li>TV</li>
+              <li>PS5</li>
+            </ul>
           </div>
 
           <div className="parpark">
             <h1>Parking</h1>
+            <ul>
+              <li>Motorcycle</li>
+              <li>Car</li>
+              <li>Capacity : 2</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -126,36 +139,51 @@ function Room() {
         {/* ------------------------------------------------------------------------------------------------------------ */}
 
       <div className="partyroompic3">
-        <div className="partytopic">Luxury Room</div>
+      <div className="partytopic2">
+           <p>Luxury Room</p>
+        </div>
       </div>
 
       <div className="partydetail">
-        <div className="topicpar">Detail</div>
-        <div className="detailallpar">
+
+        <div className="detailallpar">  
           <div className="pardetail">
             <h1>Room Detail</h1>
             <ul>
-              <li>Price / Night: 100,000 THB</li>
+              <li>Price / Night: 50,000 THB</li>
               <li>Capacity: 2</li>
               <li>1 BedRoom</li>
               <li>1 BathRoom</li>
             </ul>
           </div>
 
-          <div className="par-use">
-            <h1>Service Usage</h1>
-          </div>
 
           <div className="parroomservice">
             <h1>Service</h1>
+            <ul>
+              <li>Ramp</li>
+              <li>Dryer</li>
+              <li>Microwave</li>
+              <li>Wine</li>
+            </ul>
           </div>
 
           <div className="parfaci">
             <h1>Facilities</h1>
+            <ul>
+              <li>Fitness</li>
+              <li>VIP car parking</li>
+              <li>Private view</li>
+              <li>Private Pool</li>
+            </ul>
           </div>
 
           <div className="parpark">
             <h1>Parking</h1>
+            <ul>
+              <li>VIP car care</li>
+              <li>Capacity : Your wish</li>
+            </ul>
           </div>
         </div>
       </div>
