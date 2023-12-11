@@ -124,9 +124,9 @@ body{
         text-align: left;
         padding:5px;
         color: #FFF;
-        background-color: rgb(68, 35, 255);
+        background-color: rgb(255, 141, 35);
         font-weight:bold;
-        box-shadow: 0px 0px 10px rgb(57, 54, 255);
+        box-shadow: 0px 0px 10px rgb(255, 151, 54);
         height: 30px;
     }
     
@@ -168,12 +168,12 @@ body{
         margin-left: 40px;
         width: 40%;
         height: 100;
-        background-color: rgb(80, 77, 255);
+        background-color: rgb(255, 136, 0);
         display: flex;
         flex-direction: column;
         align-items: center;
         border-radius: 10px;
-        box-shadow: 0px 0px 10px rgb(77, 80, 255);
+        box-shadow: 0px 0px 10px rgb(255, 184, 77);
     }
 
     .paymethod{
@@ -190,7 +190,7 @@ body{
     }
     
     .paybox{
-        background-color: rgb(255, 166, 33);
+        background-color: rgb(255, 177, 33);
         width: 130px;
         height: 70px;
         display: flex;
@@ -240,7 +240,7 @@ body{
     height: 60px;
     border-radius: 10px;
     border-width: 0;
-    background-color: rgb(255, 176, 58);
+    background-color: rgb(255, 167, 95);
     font-size:20px ;
     font-weight: 700;
     transition: 0.5s;
@@ -252,4 +252,18 @@ body{
     border-color: #FFF;
     box-shadow: 0px 0px 20px rgb(254, 253, 255);
     transition: 0.5s;
+   }
+
+   .bt{
+    background-color: rgb(255, 160, 50);
+    border-width: 0px;
+    color: #FFF;
+    transition: 0.5s;
+    box-shadow: 0px 0px 10px rgb(255, 136, 0);
+   }
+
+   .bt:hover{
+    background-color: rgb(250, 204, 152);
+    transition: 0.5s;
+    box-shadow: 0px 0px 10px rgb(255, 136, 0);
    }

@@ -267,9 +267,9 @@ app.post("/api/checkout",express.json(),async(req,res)=>{
           product_data: {
             name:user.email, //Fix this
           },
-          unit_amount:product.price*100,  //Price Hotel
+          unit_amount:user.total,  //Price Hotel
         },
-        quantity: product.quantity,  //All Amout
+        quantity: user.amount,  //All Amout
       },
     ],
     mode: 'payment',
@@ -294,7 +294,7 @@ const sessionId = session.id
  connection.query('INSERT INTO orders_info SET ?',orderData,(err,result)=>{
   if(err){console.log(err)}
 
-  res.json({user,product,result,err})
+  res.json({user,product,result,err,sessionId})
  })
 
  

@@ -14,7 +14,9 @@ import creditcard from '../booking/img/creditcard.png'
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
 import Stripe from 'stripe';
-const stripe = Stripe('pk_test_51OLLwFH1Rn2e5SsU3s8EUI0Ujz8hEpB9pO7PjlzwaWpzYs466W969AvcdPPv8qYWNYvaId7nIg14gz7ljAiVSrtB00F4O0Xb4I');
+import { loadStripe } from '@stripe/stripe-js'
+
+const stripe = Stripe('sk_test_51OLLwFH1Rn2e5SsUrhRWBAymo6rPWDTlMxelVcKZNarsan1iorMrUHcjY6y8yglJjTJFPFj4uX2bKfrAI4OrC42q00AYIFyWAg');
 
 function Booking() {
   const navigate = useNavigate()
@@ -56,49 +58,7 @@ let Amount = Number(PoAmo) + Number(LuxuryAmo) + Number(DeAmo);
 
 
 
-const getData = (e) => {
-  e.preventDefault();
 
-  if(AllPrice == 0){
-    return alert("Choose your room")
-  }
-
-  
-  if(CheckIn,CheckOut == ''){
-    return alert("fill your date")
-  }
-
-  console.log(Amount,AllPrice)
-  const BookingData = {
-    "user":{
-      "email":getemail,
-      "checkin":CheckIn,
-      "checkout":CheckOut,
-      "detail":details,
-      "total":AllPrice,
-    },
-    "product":{
-      "name":"BissHotella Check Bill",
-      "price":AllPrice,
-      "quantity":Amount
-    }
-  };
-
-  console.log(BookingData);
-
-  axios.post('http://localhost:8080/api/checkout', BookingData)
-  .then((res) => {
-   console.log(res.data)
-
-  })
-  .catch((err) => {
-    console.error(err, "Failed something");
-  });
-
-
-
-
-};
 
 
 
@@ -148,6 +108,74 @@ const getData = (e) => {
   
 
 
+
+  const getData = (e) => {
+    e.preventDefault();
+  
+    if(AllPrice == 0){
+      return alert("Choose your room")
+    }
+  
+    
+    if(CheckIn,CheckOut == ''){
+      return alert("fill your date")
+    }
+  
+    console.log(Amount,AllPrice)
+    const BookingData = {
+      "user":{
+        "email":getemail,
+        "checkin":CheckIn,
+        "checkout":CheckOut,
+        "detail":details,
+        "total":AllPrice,
+        "amount":Amount,
+        "price":AllPrice
+      },
+      "product":{
+        "name":"BissHotella Check Bill",
+        "price":AllPrice,
+        "quantity":Amount
+      }
+    };
+  
+    console.log(BookingData);
+  
+     axios.post('http://localhost:8080/api/checkout', BookingData)
+    .then((res) => {
+     console.log(res.data)
+     console.log(res.data.sessionId)
+     const session = res.data.sessionId
+     stripe.redirectToCheckout({
+      sessionId: session.id,
+    })
+    //  this.stripeSession = res.data.sessionId
+    //  const Stripe = loadStripe(process.env.pk_test_51OLLwFH1Rn2e5SsU3s8EUI0Ujz8hEpB9pO7PjlzwaWpzYs466W969AvcdPPv8qYWNYvaId7nIg14gz7ljAiVSrtB00F4O0Xb4I)
+    //  Stripe.redirectToCheckout(res.data.sessionId)
+    //  return stripe.redirectToCheckout(ses);
+    })
+    .catch((err) => {
+      console.error(err, "Failed something");
+    });
+  
+    // this.stripeSession = data.data;
+    // const stripe = await loadStripe(process.env.STRIPE_PK);
+    // stripe.redirectToCheckout({ sessionId: this.stripeSession });
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
   <>
   
@@ -155,8 +183,8 @@ const getData = (e) => {
     <div className="checkVisbox">
       <h1 className="booking-title">Booking And Check Here</h1>
       <form className="bookingCheck">Check In
-        <input type="date" id="CheckIn" value={CheckIn} onChange={(e) => setCheckin(e.target.value)} />Check Out 
-        <input type="date" id="CheckOut" value={CheckOut} onChange={(e) => setCheckout(e.target.value)} />
+        <input className='inbt' type="date" id="CheckIn" value={CheckIn} onChange={(e) => setCheckin(e.target.value)} />Check Out 
+        <input className='inbt' type="date" id="CheckOut" value={CheckOut} onChange={(e) => setCheckout(e.target.value)} />
         <input value={"Check Availability"} className='bt' />
       </form>
     </div>

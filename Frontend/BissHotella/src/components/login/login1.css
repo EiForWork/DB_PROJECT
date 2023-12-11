@@ -48,20 +48,20 @@ body{
     font-size: 20px;
     width: 370px;
     height: 60px;
-    border-radius: 10px;
-    box-shadow: 2px 0px 10px rgb(180, 180, 180);
-    border:0px;
+    /* box-shadow: 2px 0px 10px rgb(180, 180, 180); */
+    border-width:0px;
+    background: none;
+    border-bottom:3px solid #fff;
   }
   .Password{
     font-size: 20px;
     width: 370px;
     height: 60px;
-    border-radius: 10px;
-    box-shadow: 2px 0px 10px rgb(180, 180, 180);
-    border:0px;
-   
+    border-radius: 0px;
+    /* box-shadow: 2px 0px 10px rgb(180, 180, 180); */
+    border-width:0px;
     background: none;
-    border-bottom:2px solid #fff;
+    border-bottom:3px solid #fff;
 
   }
 
