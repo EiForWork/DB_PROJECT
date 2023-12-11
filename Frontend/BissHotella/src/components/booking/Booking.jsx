@@ -85,9 +85,7 @@ const getData = (e) => {
   axios.post('http://localhost:8080/api/checkout', BookingData)
   .then((res) => {
    console.log(res.data)
-   const sessionId = res.data.sessionId
-   stripe.redirectToCheckout({sessionId:sessionId})
-  console.log(sessionId)
+
   })
   .catch((err) => {
     console.error(err, "Failed something");
@@ -144,6 +142,7 @@ const getData = (e) => {
     setPrice(totalPrice);
   }, [PoAmo,PoPrice,DeAmo,DeluxePrice,LuxuryAmo,/* when they are using will useEffect*/]);
   
+
 
   return (
   <>

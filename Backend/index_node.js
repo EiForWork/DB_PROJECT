@@ -64,9 +64,7 @@ connection.connect((err)=>{
 //WEBHOOK
 app.post('/webhook', express.raw({type: 'application/json'}), async (req, res) => {
   const sig = req.headers['stripe-signature']
-
   let event
-
   try {
     event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret)
   } catch (err) {
@@ -74,7 +72,6 @@ app.post('/webhook', express.raw({type: 'application/json'}), async (req, res) =
     res.status(400).send(`Webhook Error: ${err.message}`)
     return
   }
-
   // Handle the event
   switch (event.type) {
     case 'checkout.session.completed':
@@ -84,22 +81,15 @@ app.post('/webhook', express.raw({type: 'application/json'}), async (req, res) =
       const data = {
         status: paymentSuccessData.status
       }
-
       const result = await connection.query(
         'UPDATE orders_info SET ? WHERE session_id = ?',
         [data, sessionId]
       )
-
       console.log('=== update result', result)
-
-      // event.data.object.id = session.id
-      // event.data.object.customer_details คือข้อมูลลูกค้า
       break
     default:
       console.log(`Unhandled event type ${event.type}`)
   }
-
-  // Return a 200 response to acknowledge receipt of the event
   res.send()
 })
 app.use(express.json())
@@ -132,8 +122,8 @@ const verifyUser = (req,res,next) => {
 
 
 app.get('/logout', (req, res) => {
-    res.clearCookie('token', { path: '/', domain: 'localhost' });
-    return res.status(200).json({ status: 200 });
+res.clearCookie('token', { path: '/', domain: 'localhost' });
+return res.status(200).json({ status: 200 });
 });
 
 
@@ -152,6 +142,7 @@ app.post("/register", async (req, res) => {
     //Hashing Password Before the Send //hash,salt
 
     const passwordHash = await bcrypt.hash(password,10)
+    
     
     try{
     // Continue with the registration process if email is not found
@@ -240,7 +231,6 @@ app.get("/getuserdata",verifyUser, (req, res) => {
   
 
   const updateInfomation = "UPDATE customer SET fname = ?, lastname = ?, phone = ? WHERE id = ?";
-
   // PROFILE CONFIGURATION
   app.post("/updateprofile", verifyUser, (req, res) => {
     const { name, last, phone } = req.body;
@@ -263,8 +253,6 @@ app.get("/getuserdata",verifyUser, (req, res) => {
 const FindEmail ="SELECT email FROM customer WHERE id = ?"
 //ok
 app.post("/api/checkout",express.json(),async(req,res)=>{
-
-
   try{
   const {user,product} = req.body
 
@@ -286,7 +274,7 @@ app.post("/api/checkout",express.json(),async(req,res)=>{
     ],
     mode: 'payment',
     success_url : `http://localhost:5173/history?id=${orderID}`,
-    cancel_url : `http://localhost:8081/fail.html?id=${orderID}`
+    cancel_url : `http://localhost:5173/history?id=${orderID}`
   });
 // Store in database
 const orderData = {
@@ -306,7 +294,7 @@ const sessionId = session.id
  connection.query('INSERT INTO orders_info SET ?',orderData,(err,result)=>{
   if(err){console.log(err)}
 
-  res.json({user,product,result,err,sessionId})
+  res.json({user,product,result,err})
  })
 
  
