@@ -77,7 +77,7 @@ app.post('/webhook', express.raw({type: 'application/json'}), async (req, res) =
     case 'checkout.session.completed':
       const paymentSuccessData = event.data.object
       const sessionId = paymentSuccessData.id
-      console.log(paymentSuccessData,sessionId+"FROM WEBHOOKKKKKKKKKKKKKK")
+      console.log(paymentSuccessData,sessionId+"FROM WEBHOOKKKKKKK")
       const data = {
         status: paymentSuccessData.status
       }
