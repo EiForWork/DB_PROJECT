@@ -63,6 +63,11 @@ const getData = (e) => {
     return alert("Choose your room")
   }
 
+  
+  if(CheckIn,CheckOut == ''){
+    return alert("fill your date")
+  }
+
   console.log(Amount,AllPrice)
   const BookingData = {
     "user":{
@@ -77,7 +82,6 @@ const getData = (e) => {
       "price":AllPrice,
       "quantity":Amount
     }
-
   };
 
   console.log(BookingData);

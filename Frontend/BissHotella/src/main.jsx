@@ -8,6 +8,7 @@ import Register from './components/register/Register.jsx'
 import Room from './components/roomtypes/Room.jsx'
 import Profile from './components/userprofile/Profile.jsx'
 import PaymentHistory from './components/payment/PaymentHistory.jsx'
+import Success from './components/success.jsx'
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
   },{
     path:"/history",
     element:<PaymentHistory/>
+  },
+  {
+    path:"/success",
+    element:<Success/>
   }
 ])
 

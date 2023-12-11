@@ -273,7 +273,7 @@ app.post("/api/checkout",express.json(),async(req,res)=>{
       },
     ],
     mode: 'payment',
-    success_url : `http://localhost:5173/history?id=${orderID}`,
+    success_url : `http://localhost:5173/success?id=${orderID}`,
     cancel_url : `http://localhost:5173/history?id=${orderID}`
   });
 // Store in database
