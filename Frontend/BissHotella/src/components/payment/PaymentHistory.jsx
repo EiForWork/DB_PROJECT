@@ -31,10 +31,11 @@ function PaymentHistory() {
     return (
       <>
         <Navbar/>
-        <div>
-          <h2>Order History</h2>
-          <table>
+        <div className="box">
+          <table className="tables">
             <thead>
+            <h2>ORDER HISTORY</h2>
+            <hr style={{width:"360%",height:"2px",backgroundColor:"black",marginBottom:"30px"}}/>
               <tr>
                 <th>Order ID</th>
                 <th>Status</th>
@@ -49,7 +50,7 @@ function PaymentHistory() {
                 <tr key={order.order_id}>
                   <td>{order.order_id}</td>
                   <td>{order.status}</td>
-                  <td>{order.check_in}</td>
+                  <td>{(order.check_in)}</td>
                   <td>{order.check_out}</td>
                   <td>{order.Details}</td>
                   <td>{order.TotalPrice}</td>

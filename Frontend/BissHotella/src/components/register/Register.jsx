@@ -134,9 +134,9 @@ const handleSubmit = (e) =>{
               <div className="gender">
                 <p>Sex</p>
                 <div className="radioboxsex" id="gender">
-                  <input type="radio" onChange={(e)=>{setsex(e.target.value)}} value="male" /> Male
-                  <input type="radio" onChange={(e)=>{setsex(e.target.value)}} value="female" /> Female
-                  <input type="radio" onChange={(e)=>{setsex(e.target.value)}} value="other" /> LGTQ+
+                  <input name="gender" type="radio" onChange={(e)=>{setsex(e.target.value)}} value="male" /> Male
+                  <input name="gender" type="radio" onChange={(e)=>{setsex(e.target.value)}} value="female" /> Female
+                  <input name="gender" type="radio" onChange={(e)=>{setsex(e.target.value)}} value="other" /> LGTQ+
                 </div>
               </div>
             </div>
