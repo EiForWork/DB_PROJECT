@@ -276,7 +276,7 @@ app.post("/api/checkout",express.json(),async(req,res)=>{
     success_url : `http://localhost:5173/success?id=${orderID}`,
     cancel_url : `http://localhost:5173/history?id=${orderID}`
   });
-// Store in database
+// Store in databases
 const orderData = {
   email: user.email,
   session_id: session.id,
