@@ -8,7 +8,7 @@ body{
 .Picslider{
     width: 100%;
     background-image: url('./img_home/roomshow1.png');
-    height: 800px;
+    height: 850px;
 }
 
 .Picslider p{
@@ -26,7 +26,6 @@ margin: 0;
 .container{
     margin: 0;
     padding: 0;
-    
 }
 
 .slider-wrapper{
@@ -76,10 +75,9 @@ margin: 0;
 
 
 .lorem{
-    color: #fff;
+    color: #ffffff;
     width: 100%;
-    height: 500px;
-    background-color: rgb(199, 82, 82);
+    height: 600px;
     display:flex;
     align-items: center;
     justify-content: center;
@@ -120,9 +118,10 @@ margin: 0;
 
 .roomtypesBar{
     width: 100%;
-    height: 600px;
+    height: 750px;
     text-align: center;
-    background:linear-gradient(100deg,rgb(94, 204, 255),rgb(23, 38, 255) );
+    box-shadow: 0px 0px 20px rgb(0, 0, 0);
+    background:linear-gradient(100deg,rgb(118, 212, 255),rgb(23, 38, 255) );
 }
 
 .textroombox{
@@ -167,7 +166,6 @@ margin: 0;
    justify-content: center;
    align-items: center;
    flex-direction: column;
-  
    width: 100%;
    height: 100%;
 }

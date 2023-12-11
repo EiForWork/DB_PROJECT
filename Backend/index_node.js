@@ -64,9 +64,7 @@ connection.connect((err)=>{
 //WEBHOOK
 app.post('/webhook', express.raw({type: 'application/json'}), async (req, res) => {
   const sig = req.headers['stripe-signature']
-
   let event
-
   try {
     event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret)
   } catch (err) {
@@ -74,32 +72,24 @@ app.post('/webhook', express.raw({type: 'application/json'}), async (req, res) =
     res.status(400).send(`Webhook Error: ${err.message}`)
     return
   }
-
   // Handle the event
   switch (event.type) {
     case 'checkout.session.completed':
       const paymentSuccessData = event.data.object
       const sessionId = paymentSuccessData.id
-      console.log(paymentSuccessData,sessionId+"FROM WEBHOOKKKKKKKKKKKKKK")
+      console.log(paymentSuccessData,sessionId+"FROM WEBHOOKKKKKKK")
       const data = {
         status: paymentSuccessData.status
       }
-
       const result = await connection.query(
         'UPDATE orders_info SET ? WHERE session_id = ?',
         [data, sessionId]
       )
-
       console.log('=== update result', result)
-
-      // event.data.object.id = session.id
-      // event.data.object.customer_details คือข้อมูลลูกค้า
       break
     default:
       console.log(`Unhandled event type ${event.type}`)
   }
-
-  // Return a 200 response to acknowledge receipt of the event
   res.send()
 })
 app.use(express.json())
@@ -129,9 +119,11 @@ const verifyUser = (req,res,next) => {
     }
 }
 
+
+
 app.get('/logout', (req, res) => {
-    res.clearCookie('token', { path: '/', domain: 'localhost' });
-    return res.status(200).json({ status: 200 });
+res.clearCookie('token', { path: '/', domain: 'localhost' });
+return res.status(200).json({ status: 200 });
 });
 
 
@@ -150,6 +142,7 @@ app.post("/register", async (req, res) => {
     //Hashing Password Before the Send //hash,salt
 
     const passwordHash = await bcrypt.hash(password,10)
+    
     
     try{
     // Continue with the registration process if email is not found
@@ -238,7 +231,6 @@ app.get("/getuserdata",verifyUser, (req, res) => {
   
 
   const updateInfomation = "UPDATE customer SET fname = ?, lastname = ?, phone = ? WHERE id = ?";
-
   // PROFILE CONFIGURATION
   app.post("/updateprofile", verifyUser, (req, res) => {
     const { name, last, phone } = req.body;
@@ -261,22 +253,9 @@ app.get("/getuserdata",verifyUser, (req, res) => {
 const FindEmail ="SELECT email FROM customer WHERE id = ?"
 //ok
 app.post("/api/checkout",express.json(),async(req,res)=>{
-
-
   try{
-
-// //Find Email
-// const userID = req.UserID;
-// connection.query(FindEmail,[userID],(err,result)=>{
-//   if(err) return res.json({message:"Internal Server Error"})
-
-// })
-
-
   const {user,product} = req.body
-  // const {BookingData} = req.body
-  // const {users} = req.body
-  // const {User,products} = req.body
+
   const orderID = uuidv4()
   //Use API KEY SECRET KEY
   const session = await stripe.checkout.sessions.create({
@@ -288,17 +267,16 @@ app.post("/api/checkout",express.json(),async(req,res)=>{
           product_data: {
             name:user.email, //Fix this
           },
-          unit_amount:product.price*100,  //Price Hotel
+          unit_amount:user.total,  //Price Hotel
         },
-        quantity: product.quantity,  //All Amout
+        quantity: user.amount,  //All Amout
       },
     ],
     mode: 'payment',
-    success_url : `http://localhost:8081/success.html?id=${orderID}`,
-    cancel_url : `http://localhost:8081/fail.html?id=${orderID}`
+    success_url : `http://localhost:5173/success?id=${orderID}`,
+    cancel_url : `http://localhost:5173/history?id=${orderID}`
   });
-
-// Store in database
+// Store in databases
 const orderData = {
   email: user.email,
   session_id: session.id,
@@ -310,13 +288,17 @@ const orderData = {
   TotalPrice:user.total
 }
 
-
-console.log(session,user.checkin)
+console.log(session,session.id)
+const sessionId = session.id
 
  connection.query('INSERT INTO orders_info SET ?',orderData,(err,result)=>{
   if(err){console.log(err)}
-  res.json({user,product,result,err})
+
+  res.json({user,product,result,err,sessionId})
  })
+
+ 
+
 
 }catch(err){
   console.log(err,"error something")
@@ -355,9 +337,39 @@ app.get("/getemail",verifyUser,(req,res)=>{
 
 
 
+app.get("/history", verifyUser, (req, res) => {
+  const userID = req.UserID;
+  console.log(userID)
+  // First query to get user's email
+  connection.query("SELECT email FROM customer WHERE id = ?", [userID], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
 
+    if (result.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-
+    // Extract user email from the result
+    const emailuser = result[0].email;
+    console.log(emailuser)
+    // Second query to get order history based on the user's email
+    connection.query(
+      "SELECT order_id, status, check_in, check_out, Details,TotalPrice FROM orders_info WHERE email = ?",
+      [emailuser],
+      (err, results) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ message: "Internal Server Error" });
+        }
+        console.log(results)
+        // Send the order history as JSON response
+        return res.json({results});
+      }
+    );
+  });
+});
 
 
 

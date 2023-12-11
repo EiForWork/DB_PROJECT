@@ -8,11 +8,11 @@ function Home() {
   return (
     <div>
       <div className="Picslider">
-        <p>BissHotella</p>
+        <p>BissHostella</p>
       </div>
 
       <div className="lorem">
-        <h1>Welcome to BissHotella</h1>
+        <h1>Welcome to BissHostella</h1>
         <p>
           We recommend staying at the "Rios Paradise Resort" for your upcoming trip. This exquisite resort offers luxurious accommodations, breathtaking sea views, and a host of amenities to make your stay truly unforgettable. Whether you're seeking relaxation on the beach or exciting water activities, Oceanfront Paradise Resort has it all, making it an ideal choice for your coastal retreat.
         </p>
