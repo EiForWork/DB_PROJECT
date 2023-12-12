@@ -364,7 +364,7 @@ app.get("/history", verifyUser, (req, res) => {
           return res.status(500).json({ message: "Internal Server Error" });
         }
         console.log(results)
-        // Send the order history as JSON response
+        // Send the order history as JSON responsee
         return res.json({results});
       }
     );
