@@ -50,7 +50,7 @@ const connection = mysql.createConnection({
     user:"root",
     password:"root", //MAMP,
     database:'bisshotella',
-    port:'8889'
+    port:'3306'
 })
 //Catching Error
 connection.connect((err)=>{
